@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Collectiontwo({discount, collectionHeading, imgsrc}: {discount:number, collectionHeading:string, imgsrc: string}) {
     return (
-        <div className="w-full md:w-[55%] md:h-[400px] relative flex flex-col md:flex-row items-center justify-between bg-gradient-to-r from-[#f9f9f9] to-[#f4f6fd] p-8 rounded-lg shadow-lg">
+        <div className="w-full lg:w-[55%] md:h-[400px] relative flex flex-col md:flex-row items-center justify-between bg-gradient-to-r from-[#f9f9f9] to-[#f4f6fd] p-8 rounded-lg shadow-lg">
 
             {/* Text Content */}
             <div className="space-y-4 flex flex-col  justify-center items-center md:items-start ">

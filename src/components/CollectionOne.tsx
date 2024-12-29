@@ -3,7 +3,7 @@ import React from 'react'
 
         export default function CollectionOne({discount, collectionHeading, imgSrc, bgfrom, bgto}: {discount: number, collectionHeading: string, imgSrc: string, bgfrom:string, bgto:string}) {
     return (
-        <div className={`relative w-full md:w-[45%] md:h-[400px] flex flex-col md:flex-row items-center justify-between rounded-lg overflow-hidden bg-gradient-to-r ${bgfrom} ${bgto}`}>
+        <div className={`relative w-full lg:w-[45%] md:h-[400px] flex flex-col md:flex-row items-center justify-between rounded-lg overflow-hidden bg-gradient-to-r ${bgfrom} ${bgto}`}>
         
             {/* Content Container */}
             
