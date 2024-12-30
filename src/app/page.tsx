@@ -5,6 +5,7 @@ import NewCollection from "@/components/NewCollection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import TodaysDeal from "@/components/TodaysDeal";
 import WeeklyDeals from "@/components/WeeklyDeals";
+import AllProducts from "@/components/AllProducts";
 
 
 
@@ -14,7 +15,7 @@ import WeeklyDeals from "@/components/WeeklyDeals";
 export default function Home() {
   return (
     <div
-      className=" flex flex-col justify-center items-center"
+      className=" flex flex-col justify-center items-center overflow-x-hidden"
     >
       <HomeHeroSec />
       <NewCollection />
@@ -22,6 +23,7 @@ export default function Home() {
       <FeaturedProducts />
       <TodaysDeal />
       <WeeklyDeals />
+      <AllProducts/>
 
     </div>
 
