@@ -15,86 +15,89 @@ const aboshi = Aoboshi_One({
 
 export default function TodaysDeal() {
 
+    const products = [
+        {
+            id: 1,
+            image: "/images/products/e-com-product-5.png",
+            brand: "SOFOLI",
+            title: "Cozy women knit sweater with pockets",
+            rating: 4,
+            price: 15.60,
+            originalPrice: 34.00,
+        },
+        {
+            id: 2,
+            image: "/images/products/e-com-product-6.png",
+            brand: "SOFOLI",
+            title: "Cozy women knit sweater with pockets",
+            rating: 4,
+            price: 15.60,
+            originalPrice: 34.00,
+        },
+        {
+            id: 3,
+            image: "/images/products/e-com-product-7.png",
+            brand: "SOFOLI",
+            title: "Cozy women knit sweater with pockets",
+            rating: 4,
+            price: 15.60,
+            originalPrice: 34.00,
+        },
+        // Add more products as needed
+    ];
+
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const [timeLeft, setTimeLeft] = useState({
-      days: 0,
-      hours: 5,
-      minutes: 9,
-      seconds: 48
+        days: 0,
+        hours: 5,
+        minutes: 9,
+        seconds: 48
     });
-  
+
     // Timer logic
     useEffect(() => {
-      const timer = setInterval(() => {
-        setTimeLeft(prevTime => {
-          const newTime = { ...prevTime };
-          if (newTime.seconds > 0) {
-            newTime.seconds--;
-          } else {
-            newTime.seconds = 59;
-            if (newTime.minutes > 0) {
-              newTime.minutes--;
-            } else {
-              newTime.minutes = 59;
-              if (newTime.hours > 0) {
-                newTime.hours--;
-              } else {
-                newTime.hours = 23;
-                if (newTime.days > 0) {
-                  newTime.days--;
+        const timer = setInterval(() => {
+            setTimeLeft(prevTime => {
+                const newTime = { ...prevTime };
+                if (newTime.seconds > 0) {
+                    newTime.seconds--;
+                } else {
+                    newTime.seconds = 59;
+                    if (newTime.minutes > 0) {
+                        newTime.minutes--;
+                    } else {
+                        newTime.minutes = 59;
+                        if (newTime.hours > 0) {
+                            newTime.hours--;
+                        } else {
+                            newTime.hours = 23;
+                            if (newTime.days > 0) {
+                                newTime.days--;
+                            }
+                        }
+                    }
                 }
-              }
-            }
-          }
-          return newTime;
-        });
-      }, 1000);
-  
-      return () => clearInterval(timer);
+                return newTime;
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
     }, []);
-  
-    // Sample product data
-    const products = [
-      {
-        id: 1,
-        image: "/images/products/e-com-product-5.png",
-        brand: "SOFOLI",
-        title: "Cozy women knit sweater with pockets",
-        rating: 4,
-        price: 15.60,
-        originalPrice: 34.00,
-      },
-      {
-        id: 2,
-        image: "/images/products/e-com-product-6.png",
-        brand: "SOFOLI",
-        title: "Cozy women knit sweater with pockets",
-        rating: 4,
-        price: 15.60,
-        originalPrice: 34.00,
-      },
-      {
-        id: 3,
-        image: "/images/products/e-com-product-7.png",
-        brand: "SOFOLI",
-        title: "Cozy women knit sweater with pockets",
-        rating: 4,
-        price: 15.60,
-        originalPrice: 34.00,
-      },
-      // Add more products as needed
-    ];
-  
+
+
+
+
     const nextSlide = () => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === products.length - 1 ? 0 : prevIndex + 1
-      );
+        setCurrentIndex((prevIndex) =>
+            prevIndex === products.length - 1 ? 0 : prevIndex + 1
+        );
     };
-  
+
     const prevSlide = () => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === 0 ? products.length - 1 : prevIndex - 1
-      );
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? products.length - 1 : prevIndex - 1
+        );
     };
 
     return (
@@ -114,7 +117,7 @@ export default function TodaysDeal() {
                 <div className="w-screen overflow-x-hidden relative">
 
                     {/* Header with Today Deals and Navigation */}
-                    <div className={`${aboshi.className} w-full  flex justify-between items-center mb-2 px-10`}>
+                    <div className={`${aboshi.className} w-full  flex justify-between items-center mb-2 px-4 md:px-10`}>
                         <div className="flex items-center gap-2">
                             <span className="text-lg">✧</span>
                             <h2 className="text-red-500 text-lg font-medium">Today Deals</h2>
@@ -138,7 +141,7 @@ export default function TodaysDeal() {
                     </div>
 
                     {/* Main Title */}
-                    <h1 className={`${aboshi.className} text-3xl md:text-4xl font-bold mb-16 pl-10`}>Hurry Up. Offer In End</h1>
+                    <h1 className={`${aboshi.className} text-3xl md:text-4xl font-bold mb-16 pl-4 md:pl-10`}>Hurry Up. Offer In End</h1>
 
                     {/* Carousel */}
                     <div className="overflow-hidden">
