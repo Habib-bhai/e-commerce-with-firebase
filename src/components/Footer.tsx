@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image';
-import React from 'react'
+import React, { FormEvent } from 'react'
 import { Aoboshi_One } from 'next/font/google';
 import CompanyAssurances from './CompanyAssurances';
 import "@/app/globals.css";
@@ -12,7 +12,7 @@ const aoboshiOne = Aoboshi_One({
 
 export default function Footer() {
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
   };
@@ -193,10 +193,12 @@ export default function Footer() {
                   }
                 ].map((post) => (
                   <div key={post.title} className="flex gap-4">
-                    <img
+                    <Image
                       src={post.image}
                       alt={post.title}
                       className="w-20 h-20 object-cover rounded"
+                      height={100}
+                      width={100}
                     />
                     <div>
                       <h4 className="font-medium text-sm">{post.title}</h4>

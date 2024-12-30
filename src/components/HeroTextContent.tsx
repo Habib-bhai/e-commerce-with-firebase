@@ -23,7 +23,7 @@ export default function HeroTextContent() {
             </h1>
 
             <p className="text-gray-600 text-lg max-w-xl">
-                Enjoy 20% off on our entire Women's Clothing Collection! Discover stylish
+                Enjoy 20% off on our entire Women&quot;s Clothing Collection! Discover stylish
                 outfits for every occasion and save on your favorite pieces.
             </p>
 
