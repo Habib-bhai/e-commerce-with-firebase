@@ -44,8 +44,8 @@ export default function HomeHeroSec() {
                                 </CarouselItem>
 
                             </CarouselContent>
-                            <CarouselPrevious  className='top-[90%] left-[40%]  lg:top-[120%] lg:left-1 h-16 w-16'/>
-                            <CarouselNext className='top-[90%] right-[35%] lg:top-[120%] lg:right-[75%] h-16 w-16'/>
+                            <CarouselPrevious  className='top-[90%] left-[45%] sm:left-[35%]  lg:top-[120%] lg:left-1 h-16 w-16'/>
+                            <CarouselNext className='top-[90%] right-[15%] sm:right-[45%] lg:top-[120%] lg:right-[75%] h-16 w-16'/>
                         </Carousel>
                     </div>
 
