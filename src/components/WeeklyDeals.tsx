@@ -73,7 +73,7 @@ export default function DealOfWeek() {
                                 UP TO 80% OFF
                             </h1>
                             <p className="text-gray-600 text-lg">
-                                Don't miss out on our biggest sale! Enjoy up to 80% off on a wide range of products.
+                                Don&apos;t miss out on our biggest sale! Enjoy up to 80% off on a wide range of products.
                             </p>
                         </div>
 
@@ -119,7 +119,7 @@ export default function DealOfWeek() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 p-4 text-white">
-                                <h3 className="text-lg font-semibold">Women's White Collection</h3>
+                                <h3 className="text-lg font-semibold">Women&apos;s White Collection</h3>
                                 <p className="text-sm">Elegant & Comfortable</p>
                             </div>
                         </div>
@@ -134,7 +134,7 @@ export default function DealOfWeek() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 p-4 text-white">
-                                <h3 className="text-lg font-semibold">Women's White Collection</h3>
+                                <h3 className="text-lg font-semibold">Women&apos;s White Collection</h3>
                                 <p className="text-sm">Elegant & Comfortable</p>
                             </div>
                         </div>
@@ -148,7 +148,7 @@ export default function DealOfWeek() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 p-4 text-white">
-                                <h3 className="text-lg font-semibold">Women's White Collection</h3>
+                                <h3 className="text-lg font-semibold">Women&apos;s White Collection</h3>
                                 <p className="text-sm">Elegant & Comfortable</p>
                             </div>
                         </div>

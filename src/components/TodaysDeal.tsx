@@ -13,57 +13,60 @@ const aboshi = Aoboshi_One({
 
 
 
+
+const products = [
+    {
+        id: 1,
+        image: "/images/products/e-com-product-5.png",
+        brand: "SOFOLI",
+        title: "Cozy women knit sweater with pockets",
+        rating: 4,
+        price: 15.60,
+        originalPrice: 34.00,
+        timeLeft: {
+            days: 0,
+            hours: 10,
+            minutes: 20,
+            seconds: 38
+        }
+    },
+    {
+        id: 2,
+        image: "/images/products/e-com-product-6.png",
+        brand: "SOFOLI",
+        title: "Cozy women knit sweater with pockets",
+        rating: 4,
+        price: 15.60,
+        originalPrice: 34.00,
+        timeLeft: {
+            days: 0,
+            hours: 15,
+            minutes: 25,
+            seconds: 48
+        }
+    },
+    {
+        id: 3,
+        image: "/images/products/e-com-product-7.png",
+        brand: "SOFOLI",
+        title: "Cozy women knit sweater with pockets",
+        rating: 4,
+        price: 15.60,
+        originalPrice: 34.00,
+        timeLeft: {
+            days: 0,
+            hours: 20,
+            minutes: 35,
+            seconds: 49
+        }
+
+    },
+    // Add more products as needed
+];
+
 export default function TodaysDeal() {
 
-    const products = [
-        {
-            id: 1,
-            image: "/images/products/e-com-product-5.png",
-            brand: "SOFOLI",
-            title: "Cozy women knit sweater with pockets",
-            rating: 4,
-            price: 15.60,
-            originalPrice: 34.00,
-            timeLeft: {
-                days: 0,
-                hours: 10,
-                minutes: 20,
-                seconds: 38
-            }
-        },
-        {
-            id: 2,
-            image: "/images/products/e-com-product-6.png",
-            brand: "SOFOLI",
-            title: "Cozy women knit sweater with pockets",
-            rating: 4,
-            price: 15.60,
-            originalPrice: 34.00,
-            timeLeft: {
-                days: 0,
-                hours: 15,
-                minutes: 25,
-                seconds: 48
-            }
-        },
-        {
-            id: 3,
-            image: "/images/products/e-com-product-7.png",
-            brand: "SOFOLI",
-            title: "Cozy women knit sweater with pockets",
-            rating: 4,
-            price: 15.60,
-            originalPrice: 34.00,
-            timeLeft: {
-                days: 0,
-                hours: 20,
-                minutes: 35,
-                seconds: 49
-            }
-
-        },
-        // Add more products as needed
-    ];
+    
 
 
 
@@ -106,6 +109,7 @@ export default function TodaysDeal() {
     }, []);
 
 
+    
 
 
     const nextSlide = () => {
