@@ -3,7 +3,8 @@ import HomeHeroSec from "@/components/HomeHeroSec";
 import NewCollection from "@/components/NewCollection";
 import Image from "next/image";
 import { Aoboshi_One } from 'next/font/google'
-import UniqueProductCard from "@/components/ProductCard";
+import ProductCard from "@/components/ProductCard";
+
 
 const aboshi = Aoboshi_One({
   subsets: ['latin'],
@@ -37,13 +38,14 @@ export default function Home() {
 
         {/* Cards */}
         <div className="w-full flex justify-evenly items-center flex-wrap">
-            <UniqueProductCard   />
+
+            <ProductCard imgSrc="Women-sweater.jpg"   />
             
-            <UniqueProductCard   />
+            <ProductCard imgSrc="casual-suit.jpg"  />
 
-            <UniqueProductCard   />
+            <ProductCard imgSrc="Coofandy_Mens_Short_Sleeve.jpg"  />
 
-            <UniqueProductCard   />
+            <ProductCard  imgSrc="EKLENTSON_Men_jacket.jpg" />
         </div>
 
       </div>
