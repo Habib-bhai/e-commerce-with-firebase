@@ -24,6 +24,12 @@ export default function TodaysDeal() {
             rating: 4,
             price: 15.60,
             originalPrice: 34.00,
+            timeLeft: {
+                days: 0,
+                hours: 10,
+                minutes: 20,
+                seconds: 38
+            }
         },
         {
             id: 2,
@@ -33,6 +39,12 @@ export default function TodaysDeal() {
             rating: 4,
             price: 15.60,
             originalPrice: 34.00,
+            timeLeft: {
+                days: 0,
+                hours: 15,
+                minutes: 25,
+                seconds: 48
+            }
         },
         {
             id: 3,
@@ -42,18 +54,26 @@ export default function TodaysDeal() {
             rating: 4,
             price: 15.60,
             originalPrice: 34.00,
+            timeLeft: {
+                days: 0,
+                hours: 20,
+                minutes: 35,
+                seconds: 49
+            }
+
         },
         // Add more products as needed
     ];
 
 
+
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [timeLeft, setTimeLeft] = useState({
-        days: 0,
-        hours: 5,
-        minutes: 9,
-        seconds: 48
-    });
+    const [timeLeft, setTimeLeft] = useState(products[0].timeLeft);
+
+
+    useEffect(() => {
+        setTimeLeft(products[currentIndex].timeLeft);
+    }, [currentIndex]);
 
     // Timer logic
     useEffect(() => {
@@ -159,7 +179,7 @@ export default function TodaysDeal() {
                                             src={product.image}
                                             alt={product.title}
                                             className="w-full h-full rounded-xl"
-                                            objectFit="contain"
+                                            objectFit="cover"
                                             layout="fill"
                                         />
                                     </div>
