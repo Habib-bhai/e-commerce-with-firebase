@@ -6,6 +6,7 @@ import FeaturedProducts from "@/components/FeaturedProducts";
 import TodaysDeal from "@/components/TodaysDeal";
 import WeeklyDeals from "@/components/WeeklyDeals";
 import AllProducts from "@/components/AllProducts";
+import Brands from "@/components/Brands";
 
 
 
@@ -24,7 +25,7 @@ export default function Home() {
       <TodaysDeal />
       <WeeklyDeals />
       <AllProducts/>
-
+      <Brands/>
     </div>
 
 

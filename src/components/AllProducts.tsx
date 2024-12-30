@@ -1,8 +1,7 @@
 
 import React from 'react'
-import { Aoboshi_One } from 'next/font/google'
-import Image from 'next/image'
 import ProductCard from './ProductCard'
+import { Aoboshi_One } from 'next/font/google'
 
 
 const aboshi = Aoboshi_One({
