@@ -20,7 +20,7 @@ export default function Home() {
 
       {/* Categories */}
       <div className="bg-[#fffaf3] pt-20 pb-20 w-screen flex flex-col justify-center items-center">
-        <div className=" flex w-full px-5 justify-between items-center">
+        <div className=" flex flex-col md:flex-row w-full px-5 justify-between items-center">
 
 
           <div className={`${aboshi.className} mb-4 flex flex-col justify-center items-start`}>
@@ -37,7 +37,7 @@ export default function Home() {
 
         </div>
 
-        <div className="mt-10 flex justify-center items-center px-10  flex-wrap gap-10">
+        <div className="mt-10 flex justify-center items-center px-0 sm:px-10  flex-wrap gap-10">
          <CategoryCard category="Man Shirts" items={10} imgsrc="e-com-category-7.jpg"/>
          <CategoryCard category="Denim Jeans" items={45} imgsrc="e-com-category-8.jpg" />
          <CategoryCard category="Casual Suit" items={30} imgsrc="e-com-category-9.jpg"/>
