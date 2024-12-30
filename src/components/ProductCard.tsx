@@ -5,18 +5,24 @@ import { Heart, ShoppingCart, Star, Plus, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 interface productCardProps {
+    name: string
     imgSrc: string
-
+    Price: number,
+    discountedPrice: number,
+    descrition: string,
+    premium?: boolean,
+    newProduct?: boolean
+    reviews: number
 }
 
 
-const ProductCard = ({ imgSrc }: productCardProps) => {
+const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium, newProduct, reviews }: productCardProps) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
 
     return (
-        <div className="relative w-[310px] ">
+        <div className="relative w-[310px] mt-10 ">
             {/* Floating background circles */}
             <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-purple-400/30 to-pink-400/30 rounded-full blur-xl animate-pulse"></div>
             <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-blue-400/30 to-cyan-400/30 rounded-full blur-xl animate-pulse delay-700"></div>
@@ -77,23 +83,34 @@ const ProductCard = ({ imgSrc }: productCardProps) => {
 
                     {/* Price tag */}
                     <div className="absolute -right-3 top-4 bg-red-200 hover:bg-[#ee6a6a] text-white px-6 py-2 rounded-l-full shadow-lg transform transition-transform duration-300 hover:scale-105">
-                        <span className="text-sm line-through opacity-75">$129.99</span>
-                        <span className="ml-2 text-lg font-bold">$99.99</span>
+                        <span className="text-sm line-through opacity-75">${Price}</span>
+                        <span className="ml-2 text-lg font-bold">${discountedPrice}</span>
                     </div>
 
                     {/* Content */}
                     <div className="space-y-4">
                         <div className="flex items-center gap-2">
-                            <span className="px-3 py-1 text-xs font-medium bg-gradient-to-r from-[#dc2626] to-[#feeb9d] text-white rounded-full animate-shimmer">
-                                Premium
-                            </span>
-                            <span className="px-3 py-1 text-xs font-medium bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full animate-shimmer delay-150">
-                                New
-                            </span>
+                            {
+                                premium ?
+                                    <span className="px-3 py-1 text-xs font-medium bg-gradient-to-r from-[#dc2626] to-[#feeb9d] text-white rounded-full animate-shimmer">
+                                        Premium
+                                    </span>
+                                    :
+                                    null
+                            }
+
+                            {
+                                 newProduct?    
+                                <span className="px-3 py-1 text-xs font-medium bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full animate-shimmer delay-150">
+                                    New
+                                </span>
+                                : 
+                                null
+                            }
                         </div>
 
                         <h3 className="text-xl font-bold bg-black bg-clip-text text-transparent">
-                            Premium Product Name
+                            {name}
                         </h3>
 
                         {/* Interactive buttons */}
@@ -105,7 +122,7 @@ const ProductCard = ({ imgSrc }: productCardProps) => {
                                     className="p-2 rounded-full bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group"
                                 >
                                     <Heart
-                                        className={`h-5 w-5 transition-all duration-300 ${isLiked ? 'fill-pink-500 text-pink-500 scale-110' : 'text-gray-400'
+                                        className={`h-5 w-5 transition-all duration-300 ${isLiked ? 'fill-[#dc2626] text-pink-500 scale-110' : 'text-gray-400'
                                             } group-hover:scale-110`}
                                     />
                                 </button>
@@ -142,7 +159,7 @@ const ProductCard = ({ imgSrc }: productCardProps) => {
                             }`}>
                             <div className="pt-4 space-y-4">
                                 <p className="text-gray-600 text-sm leading-relaxed">
-                                    Experience premium quality with our latest product. Featuring innovative design and exceptional performance.
+                                    {descrition}
                                 </p>
                                 <div className="flex items-center gap-1">
                                     {[...Array(5)].map((_, i) => (
@@ -154,11 +171,11 @@ const ProductCard = ({ imgSrc }: productCardProps) => {
                                             style={{ transformOrigin: 'center', transitionDelay: `${i * 50}ms` }}
                                         />
                                     ))}
-                                    <span className="text-sm text-gray-600 ml-2">(4.0)</span>
+                                    <span className="text-sm text-gray-600 ml-2">({reviews})</span>
 
-                                    
+
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
