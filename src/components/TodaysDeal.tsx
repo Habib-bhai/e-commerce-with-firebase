@@ -1,9 +1,9 @@
 "use client"
 import Image from "next/image";
-import { Aoboshi_One } from 'next/font/google'
 import { useEffect, useState } from "react";
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
+import { Aoboshi_One } from 'next/font/google'
 
 
 const aboshi = Aoboshi_One({
