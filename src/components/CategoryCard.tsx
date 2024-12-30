@@ -10,7 +10,7 @@ export default function CategoryCard({ category, items, imgsrc }: { category: st
     return (
         <div className='mt-7 md:mt-0 flex flex-col justify-center items-center w-screen min-[500px]:w-[185px]'>
 
-            <Image src={`/images/categories/${imgsrc}`} alt='category' height={180} width={180} className='rounded-full z-10' />
+            <Image src={`/images/categories/${imgsrc}`} alt='category' height={500} width={500} className='w-[180px] h-[180px] object-cover rounded-full z-10' />
 
 
             <div className={`${aboshi.className} group bg-white w-full h-[180px] pb-5 flex flex-col justify-end items-center -mt-20 transition-colors duration-500 ease-in-out hover:bg-[#cc0d39] hover:text-white`}>
