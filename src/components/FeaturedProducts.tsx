@@ -84,14 +84,6 @@ export default async function FeaturedProducts() {
           <ProductCard key={item.slug.current} Price={item.price}  descrition={item.description} newProduct={item.newProduct} premium={item.premiumProduct} name={item.name} reviews={item.reviews} imgSrc={item.image}   />
         ))
       }
-
-        {/* <ProductCard Price={64.00}  descrition="Experience the premium quality sweaters" newProduct={true} name="Women Sweater" reviews={4.2} imgSrc="Women-sweater.jpg"   />
-        
-        <ProductCard Price={104} discountedPrice={90.60} descrition="Experience the premium quality casual-suit" premium={true} name="Casual Suits" reviews={4.2}  imgSrc="casual-suit.jpg"  />
-
-        <ProductCard Price={70} discountedPrice={50.60} descrition="Experience the premium quality Coofandy_Mens_Short_Sleeve" newProduct={true} name="Men&quot;s short sleeve shirts" reviews={4.2}  imgSrc="Coofandy_Mens_Short_Sleeve.jpg"  />
-
-        <ProductCard Price={50} discountedPrice={25.60} descrition="Experience the premium quality EKLENTSON_Men_jacket" premium={true} name="Men&quot;s jacket" reviews={4.2}  imgSrc="EKLENTSON_Men_jacket.jpg" /> */}
     </div>
 
   </div>

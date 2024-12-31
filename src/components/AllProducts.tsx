@@ -2,6 +2,7 @@
 import React from 'react'
 import ProductCard from './ProductCard'
 import { Aoboshi_One } from 'next/font/google'
+import { client } from '@/sanity/lib/client'
 
 
 const aboshi = Aoboshi_One({
@@ -9,7 +10,51 @@ const aboshi = Aoboshi_One({
     weight: ['400']
 })
 
-export default function AllProducts() {
+interface fetchProduct {
+    name: string,
+    price: number,
+    slug: { current: string },
+    image: {
+        _type: 'image',
+        asset: {
+            _ref: string;
+            _type: 'reference';
+        },
+        key: string
+
+    }[],
+    newProduct: boolean,
+    premiumProduct: boolean,
+    reviews: number,
+    description: string
+}
+
+
+
+async function getData() {
+    const data = await client.fetch(`
+    *[_type == "product"  ][6...12] {
+  name,
+  price,
+    slug,
+    image,
+    newProduct,
+    premiumProduct,
+    reviews,
+    description
+}
+    `)
+
+    return data
+}
+
+export const revalidate = 60
+
+
+
+export default async function AllProducts() {
+
+    const Data: fetchProduct[] = await getData()
 
     return (
         <div className='py-20 w-screen flex flex-col justify-center items-center'>
@@ -35,16 +80,11 @@ export default function AllProducts() {
             {/* cards */}
             <div className='mt-16 flex justify-center items-center flex-wrap gap-8'>
 
-                <ProductCard Price={159.88} discountedPrice={110.50} name='Casual Women Suit' descrition='This is an Elegant women suit' newProduct={true} reviews={4.2} imgSrc='casual-suit-women.jpg' />
-
-                <ProductCard Price={119.88} discountedPrice={90.50} name='Denim Jacket for Women' descrition='This is an Elegant Denim Female jacket' premium={true} reviews={4.2} imgSrc='denim_jacket_women.jpg' />
-
-                <ProductCard Price={69.88} discountedPrice={49.50} name='This is a Hoodie' descrition='This is an Elegant Hoodie' newProduct={true} reviews={4.2} imgSrc='Hoodies-men.jpg' />
-
-                <ProductCard Price={54.88} discountedPrice={30.50} name="Men&apos;s " descrition='This is an Elegant Men shirt' newProduct={true} reviews={4.2} imgSrc='Men-shirts.jpg' />
-
-
-
+                {
+                    Data.map((item: fetchProduct) => (
+                        <ProductCard key={item.slug.current} Price={item.price} descrition={item.description} newProduct={item.newProduct} premium={item.premiumProduct} name={item.name} reviews={item.reviews} imgSrc={item.image} />
+                    ))
+                }
             </div>
 
         </div>
