@@ -3,12 +3,22 @@
 import React, { useState } from 'react';
 import { Heart, ShoppingCart, Star, Plus, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import { urlFor } from '@/sanity/lib/image';
+
 
 interface productCardProps {
     name: string
-    imgSrc: string
+    imgSrc: {
+        _type: 'image',
+        asset: {
+          _ref: string;
+          _type: 'reference';
+        },
+        key: string
+      
+      }[],
     Price: number,
-    discountedPrice: number,
+    discountedPrice?: number,
     descrition: string,
     premium?: boolean,
     newProduct?: boolean
@@ -21,6 +31,10 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
     const [isLiked, setIsLiked] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
 
+    const imageUrl: string = imgSrc && imgSrc[0]?.asset 
+    ? urlFor(imgSrc[0].asset).url() 
+    : '/placeholder-image.jpg'
+
     return (
         <div className="relative w-[310px] mt-10 ">
             {/* Floating background circles */}
@@ -28,7 +42,7 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
             <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-blue-400/30 to-cyan-400/30 rounded-full blur-xl animate-pulse delay-700"></div>
 
             <div
-                className={`relative bg-white/80 backdrop-blur-md rounded-3xl transition-all duration-700 ${showDetails ? 'h-[32rem]' : 'h-[24rem]'
+                className={`relative bg-white/80 backdrop-blur-md rounded-3xl transition-all duration-700 ${showDetails ? '' : ''
                     }`}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -54,11 +68,11 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
                         <div className={`absolute inset-0 transition-all duration-700 ${isHovered ? 'scale-110 rotate-3' : 'scale-100 rotate-0'
                             }`}>
                             <Image
-                                src={`/images/products/${imgSrc}`}
+                                src={imageUrl}
                                 alt="Product"
                                 className="h-full w-full "
                                 objectFit='contain'
-                                layout='fill'
+                                fill
                             />
                         </div>
 
@@ -82,9 +96,9 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
                     </div>
 
                     {/* Price tag */}
-                    <div className="absolute -right-3 top-4 bg-red-200 hover:bg-[#ee6a6a] text-white px-6 py-2 rounded-l-full shadow-lg transform transition-transform duration-300 hover:scale-105">
-                        <span className="text-sm line-through opacity-75">${Price}</span>
-                        <span className="ml-2 text-lg font-bold">${discountedPrice}</span>
+                    <div className="absolute -right-3 top-4 bg-red-200 hover:bg-[#ee6a6a] text-white px-6 py-2 rounded-l-full shadow-lg transform transition-transform duration-300 hover:scale-105 flex">
+                        <span className={` text-sm ${discountedPrice? 'line-through' : ''} opacity-75`}>${Price}</span>
+                        <span className={`${discountedPrice? 'block': 'hidden'} ml-2 text-lg font-bold`}>${discountedPrice}</span>
                     </div>
 
                     {/* Content */}
@@ -109,7 +123,7 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
                             }
                         </div>
 
-                        <h3 className="text-xl font-bold bg-black bg-clip-text text-transparent">
+                        <h3 className="text-lg font-bold bg-black bg-clip-text text-transparent">
                             {name}
                         </h3>
 

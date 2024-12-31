@@ -20,9 +20,9 @@ export default function Brands() {
                 <Image src={"/images/brand-btn.png"} alt='brand' height={300} width={300} className='mt-14 md:mt-0 w-[150px] h-[150px] object-cover' />
             </div>
 
-            <div className='w-full flex justify-center items-center flex-wrap mx-10 gap-5'>
+            <div className='w-full  flex justify-center items-center flex-wrap mx-10 gap-5'>
 
-                <div className='bg-white w-[214px] h-[110px] flex justify-center items-center'>
+                <div className='mt-8 md:mt-0  bg-white w-[214px] h-[110px] flex justify-center items-center'>
                     <Image src={"/images/brand-1.png"} alt='brand' height={300} width={300} className='mt-14 md:mt-0 w-[102px] h-[40px] bg-white object-contain' />
                 </div>
                 <div className='bg-white w-[214px] h-[110px] flex justify-center items-center'>
