@@ -81,7 +81,7 @@ export default async function FeaturedProducts() {
 
       {
         Data.map((item: fetchProduct) => (
-          <ProductCard key={item.slug.current} Price={item.price}  descrition={item.description} newProduct={item.newProduct} premium={item.premiumProduct} name={item.name} reviews={item.reviews} imgSrc={item.image}   />
+          <ProductCard slug={item.slug} key={item.slug.current} Price={item.price}  descrition={item.description} newProduct={item.newProduct} premium={item.premiumProduct} name={item.name} reviews={item.reviews} imgSrc={item.image}   />
         ))
       }
     </div>

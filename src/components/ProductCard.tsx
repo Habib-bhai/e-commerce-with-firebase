@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Heart, ShoppingCart, Star, Plus, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
+import { useRouter } from 'next/navigation';
 
 
 interface productCardProps {
@@ -22,11 +23,16 @@ interface productCardProps {
     descrition: string,
     premium?: boolean,
     newProduct?: boolean
-    reviews: number
+    reviews: number,
+    slug: {current: string}
 }
 
 
-const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium, newProduct, reviews }: productCardProps) => {
+const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium, newProduct, reviews, slug }: productCardProps) => {
+
+
+    const router = useRouter()
+
     const [isHovered, setIsHovered] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
@@ -36,7 +42,7 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
     : '/placeholder-image.jpg'
 
     return (
-        <div className="relative w-[310px] mt-10 ">
+        <div onClick={()=> router.push(`/shop/${slug.current}`)} className="relative w-[310px] mt-10 ">
             {/* Floating background circles */}
             <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-purple-400/30 to-pink-400/30 rounded-full blur-xl animate-pulse"></div>
             <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-blue-400/30 to-cyan-400/30 rounded-full blur-xl animate-pulse delay-700"></div>
