@@ -48,6 +48,7 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
             <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-blue-400/30 to-cyan-400/30 rounded-full blur-xl animate-pulse delay-700"></div>
 
             <div
+            onClick={()=> router.push(`/shop/${slug.current}`)}
                 className={`relative bg-white/80 backdrop-blur-md rounded-3xl transition-all duration-700 ${showDetails ? '' : ''
                     }`}
                 onMouseEnter={() => setIsHovered(true)}
@@ -160,7 +161,7 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
                             </div>
 
                             {/* Add to cart button */}
-                            <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#dc2626] to-[#feeb9d] text-white rounded-full font-medium shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
+                            <button onClick={()=> router.push(`/shop/${slug.current}`)} className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#dc2626] to-[#feeb9d] text-white rounded-full font-medium shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
                                 <ShoppingCart className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
                                 <span className="relative overflow-hidden">
                                     <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">

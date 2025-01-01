@@ -11,13 +11,6 @@ const aboshi = Aoboshi_One({
   weight: ['400']
 })
 
-// tags,
-//   quantity,
-// sizes,
-// brand
-// category,
-// color,
-
 
 interface fetchProduct {
   name: string,

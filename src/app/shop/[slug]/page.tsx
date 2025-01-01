@@ -1,14 +1,16 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import { Heart, Share2, Minus, Plus, ShoppingCart, Check } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ZoomImage } from '@/components/zoom_image' 
+import { ZoomImage } from '@/components/zoom_image'
 import { SizeGuide } from '@/components/Size_Guide'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import { client } from '@/sanity/lib/client'
+import { urlFor } from '@/sanity/lib/image'
 
+// Keep existing interfaces but update fetchedData
 interface ProductImage {
   src: string
   alt: string
@@ -29,13 +31,31 @@ interface SizeOption {
   stock: number
 }
 
-const productImages: ProductImage[] = [
-  { src: "/placeholder.svg", alt: "Product purple view" },
-  { src: "/placeholder.svg", alt: "Product yellow view" },
-  { src: "/placeholder.svg", alt: "Product pink view" },
-  { src: "/placeholder.svg", alt: "Product light pink view" },
-]
+interface fetchedData {
+  name: string
+  price: number
+  slug: string
+  image: {
+    _type: 'image'
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+    key: string
+  }[]
+  newProduct: boolean
+  premiumProduct: boolean
+  reviews: number
+  description: string
+  tags: string[]
+  quantity: number
+  sizes: []
+  brand: string
+  category: string
+  color: string
+}
 
+// Keep existing color and size options
 const colors: ColorOption[] = [
   { id: 'purple', name: 'Royal Purple', class: 'bg-purple-500', price: 40, stock: 5 },
   { id: 'yellow', name: 'Sunshine Yellow', class: 'bg-yellow-400', price: 45, stock: 3 },
@@ -51,15 +71,17 @@ const sizes: SizeOption[] = [
   { id: '2XL', label: '2XL', price: 5, stock: 4 },
 ]
 
-export default function ProductDetail() {
+export default function ProductDetail({ params }: { params: { slug: string } }) {
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedColor, setSelectedColor] = useState<ColorOption>(colors[0])
   const [selectedSize, setSelectedSize] = useState<SizeOption>(sizes[1])
   const [quantity, setQuantity] = useState(1)
   const [isAddedToCart, setIsAddedToCart] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
+  const [data, setData] = useState<fetchedData>()
 
-  const basePrice = 40
+  // Update basePrice to use fetched data price
+  const basePrice = data?.price || 40
   const finalPrice = basePrice + selectedColor.price + selectedSize.price
 
   const handleAddToCart = () => {
@@ -71,6 +93,35 @@ export default function ProductDetail() {
     setQuantity(1)
   }, [selectedColor, selectedSize])
 
+  async function getData(slug: string) {
+    const result = await client.fetch(`
+      *[_type == "product" && slug.current == "${slug}"][0] {
+        name,
+        price,
+        slug,
+        image,
+        newProduct,
+        premiumProduct,
+        reviews,
+        description,
+        tags,
+         quantity,
+        sizes,
+        brand,
+      category,
+        color,
+      }
+    `)
+    setData(result)
+  }
+
+  useEffect(() => {
+    if (params.slug) {
+      getData(params.slug)
+    }
+  }, [params.slug])
+  console.log(data)
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -78,22 +129,22 @@ export default function ProductDetail() {
           {/* Image Gallery */}
           <div className="space-y-4">
             <ZoomImage
-              src={productImages[selectedImage].src}
-              alt={productImages[selectedImage].alt}
+              src={data?.image && data.image[selectedImage] ? urlFor(data.image[selectedImage]).url() : ""}
+              alt={`Product image ${selectedImage + 1}`}
             />
             <div className="grid grid-cols-4 gap-4">
-              {productImages.map((image, index) => (
+              {data?.image?.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
                   className={`relative aspect-square overflow-hidden rounded-lg transition-all duration-200 
-                    ${selectedImage === index 
-                      ? 'ring-2 ring-primary scale-95 opacity-100' 
+                    ${selectedImage === index
+                      ? 'ring-2 ring-primary scale-95 opacity-100'
                       : 'hover:scale-95 opacity-60 hover:opacity-100'}`}
                 >
                   <Image
-                    src={image.src}
-                    alt={image.alt}
+                    src={urlFor(image).url()}
+                    alt={`Product view ${index + 1}`}
                     fill
                     className="object-cover"
                   />
@@ -106,15 +157,20 @@ export default function ProductDetail() {
           <div className="space-y-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <Badge variant="destructive" className="text-sm">SALE 70% OFF</Badge>
+                {data?.newProduct && (
+                  <Badge variant="destructive" className="text-sm">New Product</Badge>
+                )}
                 {selectedColor.stock < 5 && selectedColor.stock > 0 && (
                   <Badge variant="secondary" className="text-sm">
                     Only {selectedColor.stock} left
                   </Badge>
                 )}
+                {data?.premiumProduct && (
+                  <Badge variant="secondary" className="text-sm">Premium Product</Badge>
+                )}
               </div>
               <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
-                Cargo Shorts With Pockets & Sundress Drawstring
+                {data?.name || 'Loading...'}
               </h1>
               <div className="flex items-center space-x-2">
                 <div className="flex text-yellow-400">
@@ -128,18 +184,17 @@ export default function ProductDetail() {
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm text-gray-500">(45 Reviews)</span>
+                <span className="text-sm text-gray-500">({data?.reviews || 0} Reviews)</span>
               </div>
             </div>
 
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              A type of casual shorts, typically for men, with multiple pockets for function.
-              Sundress with drawstring: A loose-fitting, sleeveless dress, often for women, with a
-              drawstring at the waist for adjustability and a relaxed silhouette.
+              {data?.description || 'Loading description...'}
             </p>
 
+            {/* Rest of the component remains the same */}
             <div className="space-y-4">
-              <motion.div 
+              <motion.div
                 className="flex items-center space-x-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -191,9 +246,8 @@ export default function ProductDetail() {
                       variant={selectedSize.id === size.id ? "default" : "outline"}
                       onClick={() => setSelectedSize(size)}
                       disabled={size.stock === 0}
-                      className={`min-w-[3rem] relative ${
-                        size.stock === 0 ? 'opacity-50' : ''
-                      }`}
+                      className={`min-w-[3rem] relative ${size.stock === 0 ? 'opacity-50' : ''
+                        }`}
                     >
                       {size.label}
                       {size.price > 0 && (
@@ -227,7 +281,7 @@ export default function ProductDetail() {
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
-                <Button 
+                <Button
                   className="flex-1 h-12 rounded-xl relative overflow-hidden"
                   onClick={handleAddToCart}
                   disabled={selectedColor.stock === 0}
@@ -256,20 +310,19 @@ export default function ProductDetail() {
                     )}
                   </AnimatePresence>
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
+                <Button
+                  variant="outline"
+                  size="icon"
                   className="h-12 w-12 rounded-xl"
                   onClick={() => setIsFavorite(!isFavorite)}
                 >
-                  <Heart 
-                    className={`w-4 h-4 transition-colors ${
-                      isFavorite ? 'fill-red-500 stroke-red-500' : ''
-                    }`} 
+                  <Heart
+                    className={`w-4 h-4 transition-colors ${isFavorite ? 'fill-red-500 stroke-red-500' : ''
+                      }`}
                   />
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="icon"
                   className="h-12 w-12 rounded-xl"
                 >
@@ -309,4 +362,3 @@ export default function ProductDetail() {
     </div>
   )
 }
-
