@@ -9,15 +9,13 @@ import AllProducts from "@/components/AllProducts";
 import Brands from "@/components/Brands";
 
 
-
-
-
-
 export default function Home() {
+
   return (
     <div
       className=" flex flex-col justify-center items-center overflow-x-hidden"
     >
+
       <HomeHeroSec />
       <NewCollection />
       <Categories />
