@@ -117,7 +117,7 @@ export default function ShopPage() {
 
 
 
-  async function getData(slug: string) {
+  async function getData() {
       const result = await client.fetch(`
         *[_type == "product" ][0] {
           
@@ -130,7 +130,7 @@ export default function ShopPage() {
 
      useEffect(() => {
         
-          getData("hello")
+          getData()
         
       }, [])
   
@@ -221,7 +221,7 @@ export default function ShopPage() {
               <ProductCard
                 key={product.id}
                 name={product.name}
-                imgSrc={data ? data : null}
+                imgSrc={data ? data : []}
                 Price={product.Price}
                 discountedPrice={product.discountedPrice}
                 descrition={product.description}
