@@ -1,6 +1,33 @@
 import ProductDetailsDynamicPageStructure from "@/components/ProductDetailsDynamicPageStructure"
 import { client } from "@/sanity/lib/client"
 
+
+
+export interface fetchedData {
+    name: string
+    price: number
+    slug: string
+    image: {
+        _type: 'image'
+        asset: {
+            _ref: string
+            _type: 'reference'
+        }
+        key: string
+    }[]
+    newProduct: boolean
+    premiumProduct: boolean
+    reviews: number
+    description: string
+    tags: string[]
+    quantity: number
+    sizes: string[]
+    brand: string
+    category: string
+    color: string
+}
+
+
 async function getData(slug: string) {
   const result = await client.fetch(`
     *[_type == "product" && slug.current == "${slug}"][0] {

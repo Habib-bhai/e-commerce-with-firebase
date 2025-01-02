@@ -9,31 +9,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { fetchedData } from '@/app/shop/[slug]/page'
 
-
-interface fetchedData {
-    name: string
-    price: number
-    slug: string
-    image: {
-        _type: 'image'
-        asset: {
-            _ref: string
-            _type: 'reference'
-        }
-        key: string
-    }[]
-    newProduct: boolean
-    premiumProduct: boolean
-    reviews: number
-    description: string
-    tags: string[]
-    quantity: number
-    sizes: string[]
-    brand: string
-    category: string
-    color: string
-}
 
 
 export default function ProductDetailsDynamicPageStructure({ SanityData }: { SanityData: fetchedData }) {
