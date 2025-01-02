@@ -43,7 +43,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
     const [quantity, setQuantity] = useState(1)
     const [isAddedToCart, setIsAddedToCart] = useState(false)
     const [isFavorite, setIsFavorite] = useState(false)
-    const [data, setData] = useState<fetchedData>(SanityData)
+    const [data] = useState<fetchedData>(SanityData)
     const [sizePrice, setSizePrice] = useState(0)
     const [showStockAlert, setShowStockAlert] = useState(false)
 
