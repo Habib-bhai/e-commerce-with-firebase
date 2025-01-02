@@ -63,8 +63,8 @@ export default function Header() {
                 <div className='hidden md:flex justify-center items-center gap-5'>
                     <Link href="/">Home</Link>
                     <Link href="/shop">shop</Link>
-                    <Link href="/shop">About</Link>
-                    <Link href="/shop">Contact</Link>
+                    <Link href="/about">About</Link>
+                    <Link href="/contact">Contact</Link>
                 </div>
 
                 {/* search, wishlist, cart */}
@@ -103,8 +103,8 @@ export default function Header() {
                 <div className={`${aoboshiOne.className} text-2xl flex flex-col  justify-center items-center mt-10 mb-12 gap-5 `}>
                     <Link href="/">Home</Link>
                     <Link href="/shop">shop</Link>
-                    <Link href="/shop">About</Link>
-                    <Link href="/shop">Contact</Link>
+                    <Link href="/about">About</Link>
+                    <Link href="/contact">Contact</Link>
                 </div>
 
                 <Image src={"/images/icons/cross.svg"} alt='close' height={40} width={40} onClick={() => setSidebar("hidden")} className='absolute right-5 top-1'/>
