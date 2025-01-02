@@ -152,6 +152,7 @@ export default function ShopPage() {
             <div>
               <h3 className="font-semibold mb-4">Product Categories</h3>
               <div className="space-y-2">
+
                 {categories.map((category) => (
                   <label key={category.name} className="flex items-center gap-2">
                     <Checkbox
@@ -162,6 +163,7 @@ export default function ShopPage() {
                     <span className="text-sm text-muted-foreground ml-auto">({category.count})</span>
                   </label>
                 ))}
+
               </div>
             </div>
 
@@ -185,6 +187,7 @@ export default function ShopPage() {
             <div>
               <h3 className="font-semibold mb-4">Size</h3>
               <div className="flex flex-wrap gap-2">
+                
                 {sizes.map((size) => (
                   <Button
                     key={size}
