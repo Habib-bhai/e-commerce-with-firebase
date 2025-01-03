@@ -22,7 +22,7 @@ export function Wishlist() {
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="relative">
           <Image src={"/images/icons/heart.svg"} alt='search' height={20} width={20} 
-          className='h-6 w-6'
+          className=' h-8 md:h-6 w-8 md:w-6'
           />
           {state.items.length > 0 && (
             <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
@@ -31,7 +31,7 @@ export function Wishlist() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-[400px] sm:w-[540px]">
+      <SheetContent className="w-[320px] sm:w-[540px]">
         <SheetHeader className="flex flex-row items-center justify-between">
           <SheetTitle>My Wishlist</SheetTitle>
           

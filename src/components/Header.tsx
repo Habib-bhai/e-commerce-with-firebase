@@ -69,10 +69,8 @@ export default function Header() {
                     <Link href="/contact">Contact</Link>
                 </div>
 
-                {/* search, wishlist, cart */}
+                {/*  wishlist, cart */}
                 <div className='hidden  md:flex justify-center items-center gap-4'>
-                    <Image src={"/images/icons/search.svg"} alt='search' height={20} width={20} />
-                    <Image src={"/images/icons/star.svg"} alt='search' height={15} width={15} />
                     <Wishlist />
                     <Image src={"/images/icons/star.svg"} alt='search' height={15} width={15} />
                     <Cart />
@@ -84,17 +82,12 @@ export default function Header() {
             </div>
 
             {/* sidebar */}
-            <div className={`${sidebar} flex-col md:hidden gap-5 bg-gray-400/65 shadow-black shadow-sm z-20 w-full  relative`}>
+            <div className={`${sidebar} flex-col md:hidden gap-5  bg-gray-400/65 shadow-black shadow-sm z-20 w-full  relative`}>
 
-                {/* search, wishlist, cart */}
-                <div className='flex justify-center items-center gap-8 w-full  flex-col'>
-
-                    <div className='mt-14 flex justify-center items-center w-80 gap-2 bg-white h-10 rounded-md'>
-                        <input type="text" placeholder='search' className='bg-white outline-none  h-[90%]' />
-                        <Image src={"/images/icons/search.svg"} alt='search' height={20} width={20} />
-                    </div>
+                {/*  wishlist, cart */}
+                <div className='flex justify-center items-center mt-5 gap-8 w-full  flex-col'>
                     <div className='flex justify-start items-center gap-2' >
-                        <Image src={"/images/icons/heart.svg"} alt='search' height={40} width={40} />
+                        <Wishlist />
                         <Image src={"/images/icons/star.svg"} alt='search' height={20} width={20} />
                         {/* <Image src={"/images/icons/shopping-bag.svg"} alt='search' height={40} width={40} /> */}
                         <Cart />
