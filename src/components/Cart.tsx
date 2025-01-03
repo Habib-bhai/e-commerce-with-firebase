@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { useCart } from '@/app/context/CartContext'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export function Cart() {
   const { state, removeItem, updateQuantity } = useCart()
@@ -84,8 +85,8 @@ export function Cart() {
               <span>Subtotal:</span>
               <span>${state.total.toFixed(2)}</span>
             </div>
-            <Button className="w-full bg-black hover:bg-gray-800">
-              Proceed to checkout
+            <Button asChild className="w-full bg-black hover:bg-gray-800">
+              <Link href="/checkout/success">Proceed to checkout</Link>
             </Button>
           </div>
         )}
