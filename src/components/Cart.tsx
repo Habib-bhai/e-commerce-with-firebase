@@ -21,7 +21,7 @@ export function Cart() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-[400px] sm:w-[540px] overflow-y-scroll">
+      <SheetContent className="w-[360px] sm:w-[540px] overflow-y-scroll">
         <SheetHeader className="flex flex-row items-center justify-between">
           <SheetTitle>My cart</SheetTitle>
 
