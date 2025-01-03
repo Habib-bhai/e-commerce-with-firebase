@@ -5,6 +5,7 @@ import { Heart, ShoppingCart, Star, Plus, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 import { useRouter } from 'next/navigation';
+import { useCart } from '@/app/context/CartContext';
 
 
 interface productCardProps {
@@ -12,43 +13,56 @@ interface productCardProps {
     imgSrc: {
         _type: 'image',
         asset: {
-          _ref: string;
-          _type: 'reference';
+            _ref: string;
+            _type: 'reference';
         },
         key: string
-      
-      }[],
+
+    }[],
     Price: number,
     discountedPrice?: number,
     descrition: string,
     premium?: boolean,
     newProduct?: boolean
     reviews: number,
-    slug: {current: string}
+    slug: { current: string }
 }
 
 
-const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium, newProduct, reviews, slug }: productCardProps) => {
-
+const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium, newProduct, reviews, slug }: productCardProps) => {
 
     const router = useRouter()
+    const { addItem } = useCart();
 
     const [isHovered, setIsHovered] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
 
-    const imageUrl: string = imgSrc && imgSrc[0]?.asset 
-    ? urlFor(imgSrc[0].asset).url() 
-    : '/placeholder-image.jpg'
+    const imageUrl: string = imgSrc && imgSrc[0]?.asset
+        ? urlFor(imgSrc[0].asset).url()
+        : '/placeholder-image.jpg'
+
+    const handleAddToCart = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        addItem({
+            id: slug.current,
+            name,
+            price: Price,
+            image: imageUrl,
+            quantity: 1
+        });
+    }
+
+
 
     return (
-        <div onClick={()=> router.push(`/shop/${slug.current}`)} className="relative w-[310px] mt-10 ">
+        <div onClick={() => router.push(`/shop/${slug.current}`)} className="relative w-[310px] mt-10 ">
             {/* Floating background circles */}
             <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-purple-400/30 to-pink-400/30 rounded-full blur-xl animate-pulse"></div>
             <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-blue-400/30 to-cyan-400/30 rounded-full blur-xl animate-pulse delay-700"></div>
 
             <div
-            onClick={()=> router.push(`/shop/${slug.current}`)}
+                onClick={() => router.push(`/shop/${slug.current}`)}
                 className={`relative bg-white/80 backdrop-blur-md rounded-3xl transition-all duration-700 ${showDetails ? '' : ''
                     }`}
                 onMouseEnter={() => setIsHovered(true)}
@@ -104,8 +118,8 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
 
                     {/* Price tag */}
                     <div className="absolute -right-3 top-4 bg-red-200 hover:bg-[#ee6a6a] text-white px-6 py-2 rounded-l-full shadow-lg transform transition-transform duration-300 hover:scale-105 flex">
-                        <span className={` text-sm ${discountedPrice? 'line-through' : ''} opacity-75`}>${Price}</span>
-                        <span className={`${discountedPrice? 'block': 'hidden'} ml-2 text-lg font-bold`}>${discountedPrice}</span>
+                        <span className={` text-sm ${discountedPrice ? 'line-through' : ''} opacity-75`}>${Price}</span>
+                        <span className={`${discountedPrice ? 'block' : 'hidden'} ml-2 text-lg font-bold`}>${discountedPrice}</span>
                     </div>
 
                     {/* Content */}
@@ -121,12 +135,12 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
                             }
 
                             {
-                                 newProduct?    
-                                <span className="px-3 py-1 text-xs font-medium bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full animate-shimmer delay-150">
-                                    New
-                                </span>
-                                : 
-                                null
+                                newProduct ?
+                                    <span className="px-3 py-1 text-xs font-medium bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full animate-shimmer delay-150">
+                                        New
+                                    </span>
+                                    :
+                                    null
                             }
                         </div>
 
@@ -161,7 +175,23 @@ const ProductCard = ({ name ,imgSrc, Price, discountedPrice, descrition, premium
                             </div>
 
                             {/* Add to cart button */}
-                            <button onClick={()=> router.push(`/shop/${slug.current}`)} className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#dc2626] to-[#feeb9d] text-white rounded-full font-medium shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
+                            {/* <button onClick={()=> router.push(`/shop/${slug.current}`)} className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#dc2626] to-[#feeb9d] text-white rounded-full font-medium shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
+                                <ShoppingCart className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
+                                <span className="relative overflow-hidden">
+                                    <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">
+                                        Add to Cart
+                                    </span>
+                                    <span className="absolute top-0 left-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0">
+                                        Buy Now
+                                    </span>
+                                </span>
+                                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                            </button> */}
+
+                            <button
+                                onClick={handleAddToCart}
+                                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#dc2626] to-[#feeb9d] text-white rounded-full font-medium shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group"
+                            >
                                 <ShoppingCart className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
                                 <span className="relative overflow-hidden">
                                     <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">

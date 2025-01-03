@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { DM_Sans } from "next/font/google"
 import Link from 'next/link';
 import { Aoboshi_One } from 'next/font/google';
+import { Cart } from './Cart';
 
 const aoboshiOne = Aoboshi_One({
     subsets: ["latin"],
@@ -73,7 +74,8 @@ export default function Header() {
                     <Image src={"/images/icons/star.svg"} alt='search' height={15} width={15} />
                     <Image src={"/images/icons/heart.svg"} alt='search' height={20} width={20} />
                     <Image src={"/images/icons/star.svg"} alt='search' height={15} width={15} />
-                    <Image src={"/images/icons/shopping-bag.svg"} alt='search' height={20} width={20} />
+                    
+                    <Cart />
 
                 </div>
 
