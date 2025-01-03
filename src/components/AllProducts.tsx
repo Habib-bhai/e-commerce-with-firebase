@@ -1,6 +1,5 @@
 
-import React, { useState } from 'react'
-import ProductCard from './ProductCard'
+import React from 'react'
 import { client } from '@/sanity/lib/client'
 import AllProductsUI from './AllProductsUI';
 

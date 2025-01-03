@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from 'react'
 import ProductCard from './ProductCard'
-import { client } from '@/sanity/lib/client'
 import { Aoboshi_One } from 'next/font/google'
 import { fetchProduct } from './AllProducts'
 

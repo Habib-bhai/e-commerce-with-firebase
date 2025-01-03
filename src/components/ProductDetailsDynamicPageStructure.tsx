@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react'
-import { Heart, Share2, Minus, Plus, ShoppingCart, Check, AlertCircle } from 'lucide-react'
+import { Heart, Share2, Minus, Plus, ShoppingCart, Check} from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ZoomImage } from '@/components/zoom_image'
@@ -8,7 +8,6 @@ import { SizeGuide } from '@/components/Size_Guide'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { fetchedData } from '@/app/shop/[slug]/page'
 import { useCart } from '@/app/context/CartContext'
 import { toast } from "sonner"
@@ -25,7 +24,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
     const [isFavorite, setIsFavorite] = useState(false)
     const [data] = useState<fetchedData>(SanityData)
     const [sizePrice, setSizePrice] = useState(0)
-    const [showStockAlert, setShowStockAlert] = useState(false)
+    const [ , setShowStockAlert] = useState(false)
 
 
     // if (data?.color) setSelectedColor(data.color);
