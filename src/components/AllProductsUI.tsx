@@ -56,12 +56,7 @@ export default function AllProductsUI({data}: {data:fetchProduct[]}) {
                 </div>
 
                 {/* buttons */}
-                {/* <div className='mt-10 md:mt-0  flex justify-center items-center gap-5 rounded-full border border-gray-500 h-[55px] text-sm px-4'>
-                    <button className='h-[40px] rounded-full w-[100px] md:w-[125px] focus:bg-black focus:text-white transition duration-300 ease-in-out '> Premium</button>
-                    <button className='h-[40px] rounded-full w-[100px] md:w-[125px] focus:bg-black focus:text-white transition duration-300 ease-in-out'>New Arrival</button>
-                    <button className='h-[40px] rounded-full w-[100px] md:w-[125px] focus:bg-black focus:text-white transition duration-300 ease-in-out'>Popular</button>
-                </div> */}
-                 <div className='mt-10 md:mt-0 flex justify-center items-center gap-5 rounded-full border border-gray-500 h-[55px] text-sm px-4'>
+                 <div className='mt-10 md:mt-0 flex flex-wrap justify-center items-center gap-5 rounded-full border border-gray-500 h-28 text-sm px-10'>
                     <button 
                         onClick={() => filterProducts('all')}
                         className={`h-[40px] rounded-full w-[100px] md:w-[125px] transition duration-300 ease-in-out ${selectedTags.length === 0 ? 'bg-black text-white' : ''}`}
