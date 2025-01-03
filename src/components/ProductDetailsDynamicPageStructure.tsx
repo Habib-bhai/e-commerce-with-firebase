@@ -12,6 +12,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { fetchedData } from '@/app/shop/[slug]/page'
 import { useCart } from '@/app/context/CartContext'
 import { toast } from "sonner"
+import { useWishlist } from '@/app/context/WishListContext';
 
 
 
@@ -32,7 +33,9 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
 
     const basePrice = data?.price || 0
     const finalPrice = basePrice + sizePrice
-    const {addItem} = useCart()
+    const { addItem } = useCart()
+    const { state: wishlistState, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlist()
+
 
     const getPriceIncrement = (size: string) => {
         const normalizedSize = size.toLowerCase();
@@ -61,6 +64,10 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
         setQuantity(1);
     }, [selectedSize]);
 
+    useEffect(() => {
+        setIsFavorite(wishlistState.items.some(item => item.id === data.slug));
+    }, [wishlistState, data.slug]);
+
     const handleAddToCart = () => {
         if (data && selectedSize) {
             addItem({
@@ -76,6 +83,23 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
         }
     };
 
+
+    const handleToggleWishlist = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (isFavorite) {
+            removeFromWishlist(SanityData.slug);
+            toast.success(`${SanityData.name} removed from wishlist`);
+        } else {
+            addToWishlist({
+                id: data.slug,
+                name: data.name,
+                price: data.price,
+                image: data.image && data.image[0] ? urlFor(data.image[0]).url() : "",
+            });
+            toast.success(`${data.name} added to wishlist`);
+        }
+        setIsFavorite(!isFavorite);
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
@@ -292,7 +316,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                                     variant="outline"
                                     size="icon"
                                     className="h-12 w-12 rounded-xl"
-                                    onClick={() => setIsFavorite(!isFavorite)}
+                                    onClick={handleToggleWishlist}
                                 >
                                     <Heart
                                         className={`w-4 h-4 transition-colors ${isFavorite ? 'fill-red-500 stroke-red-500' : ''
@@ -310,7 +334,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                         </div>
 
                         {/* Stock Alert */}
-                        <AnimatePresence>
+                        {/* <AnimatePresence>
                             {showStockAlert && (
                                 <motion.div
                                     initial={{ opacity: 0, y: -20 }}
@@ -327,7 +351,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                                     </Alert>
                                 </motion.div>
                             )}
-                        </AnimatePresence>
+                        </AnimatePresence> */}
 
 
                         {/* Product Details */}

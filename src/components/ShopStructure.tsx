@@ -11,9 +11,11 @@ import { SanityData } from '@/app/shop/page'
 
 
 export default function ShopStructure({ sanityData }: { sanityData: SanityData[] }) {
+
   const [showFilters, setShowFilters] = useState(false)
-  const [priceRange, setPriceRange] = useState([0, 100])
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+  const [priceRange, setPriceRange] = useState([0, 100])
+
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [data] = useState<SanityData[]>(sanityData)
@@ -32,8 +34,9 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
   const sizes = ["XS", "S", "M", "L", "XL"]
   const tags = ["New Arrival", "Sale", "Popular", "Premium", "Men Hoodies", "Women Hoodies", "denim", "shirts"]
 
+
   const toggleCategory = (category: string) => {
-    setSelectedCategories(prev =>
+    setSelectedCategories((prev: string[]) =>
       prev.includes(category)
         ? prev.filter(c => c !== category)
         : [...prev, category]
@@ -115,16 +118,17 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
               <h3 className="font-semibold mb-4">Product Categories</h3>
               <div className="space-y-2">
 
-                {categories.map((category) => (
-                  <label key={category.name} className="flex items-center gap-2">
-                    <Checkbox
-                      checked={selectedCategories.includes(category.name)}
-                      onCheckedChange={() => toggleCategory(category.name)}
-                    />
-                    <span className="text-sm">{category.name}</span>
-                    <span className="text-sm text-muted-foreground ml-auto">({category.count})</span>
-                  </label>
-                ))}
+                {
+                  categories.map((category) => (
+                    <label key={category.name} className="flex items-center gap-2">
+                      <Checkbox
+                        checked={selectedCategories.includes(category.name)}
+                        onCheckedChange={() => toggleCategory(category.name)}
+                      />
+                      <span className="text-sm">{category.name}</span>
+                      <span className="text-sm text-muted-foreground ml-auto">({category.count})</span>
+                    </label>
+                  ))}
 
               </div>
             </div>

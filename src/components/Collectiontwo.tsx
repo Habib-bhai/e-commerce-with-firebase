@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 export default function Collectiontwo({discount, collectionHeading, imgsrc}: {discount:number, collectionHeading:string, imgsrc: string}) {
@@ -12,9 +13,11 @@ export default function Collectiontwo({discount, collectionHeading, imgsrc}: {di
                 <h2 className="text-xl text-center md:text-start md:text-4xl font-bold text-gray-900 leading-tight">
                     {collectionHeading}
                 </h2>
+                <Link href={"/shop"}>
                 <button className="transition-colors duration-500 ease-in-out hover:bg-[#cc0d39]  px-6 py-3 bg-black text-white font-medium rounded-full  ">
                     Shop Now
                 </button>
+                </Link>
             </div>
 
             {/* Image */}

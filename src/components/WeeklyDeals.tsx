@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Aoboshi_One } from 'next/font/google'
 import Image from 'next/image'
+import Link from 'next/link'
 
 
 const aboshi = Aoboshi_One({
@@ -102,9 +103,11 @@ export default function DealOfWeek() {
                             </div>
                         </div>
 
-                        <Button className="ml-4 md:pl-10 bg-black hover:bg-navy-800 text-white px-8 py-6 rounded-full text-lg transition-colors duration-300 ease-in-out hover:bg-[#dc2626]">
-                            Shop Now
-                        </Button>
+                        <Link href={"/shop"}>
+                            <Button className="ml-4 md:pl-10 bg-black hover:bg-navy-800 text-white px-8 py-6 rounded-full text-lg transition-colors duration-300 ease-in-out hover:bg-[#dc2626]">
+                                Shop Now
+                            </Button>
+                        </Link>
                     </div>
 
                     <div className="w-full flex justify-center items-center flex-wrap md:grid place-content-center place-items-start  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  overflow-x-hidden gap-5 lg:gap-56 overflow-hidden">

@@ -5,6 +5,7 @@ import { DM_Sans } from "next/font/google"
 import Link from 'next/link';
 import { Aoboshi_One } from 'next/font/google';
 import { Cart } from './Cart';
+import { Wishlist } from './Wishlist';
 
 const aoboshiOne = Aoboshi_One({
     subsets: ["latin"],
@@ -18,7 +19,7 @@ const dmsans = DM_Sans({
 
 export default function Header() {
 
-        const [sidebar, setSidebar] = useState("hidden")
+    const [sidebar, setSidebar] = useState("hidden")
 
     return (
         <div className='overflow-x-hidden w-screen relative'>
@@ -72,14 +73,14 @@ export default function Header() {
                 <div className='hidden  md:flex justify-center items-center gap-4'>
                     <Image src={"/images/icons/search.svg"} alt='search' height={20} width={20} />
                     <Image src={"/images/icons/star.svg"} alt='search' height={15} width={15} />
-                    <Image src={"/images/icons/heart.svg"} alt='search' height={20} width={20} />
+                    <Wishlist />
                     <Image src={"/images/icons/star.svg"} alt='search' height={15} width={15} />
                     <Cart />
-                    
+
 
                 </div>
 
-                <Image onClick={()=> setSidebar("flex")} src={"/images/icons/hamburger.svg"} alt='hamburger' width={40} height={40} className='block md:hidden' />
+                <Image onClick={() => setSidebar("flex")} src={"/images/icons/hamburger.svg"} alt='hamburger' width={40} height={40} className='block md:hidden' />
             </div>
 
             {/* sidebar */}
@@ -109,7 +110,7 @@ export default function Header() {
                     <Link href="/contact">Contact</Link>
                 </div>
 
-                <Image src={"/images/icons/cross.svg"} alt='close' height={40} width={40} onClick={() => setSidebar("hidden")} className='absolute right-5 top-1'/>
+                <Image src={"/images/icons/cross.svg"} alt='close' height={40} width={40} onClick={() => setSidebar("hidden")} className='absolute right-5 top-1' />
             </div>
         </div>
     )

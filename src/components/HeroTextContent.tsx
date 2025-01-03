@@ -1,4 +1,5 @@
 import { Aoboshi_One } from 'next/font/google'
+import Link from 'next/link'
 import React from 'react'
 
 const aoboshiOne = Aoboshi_One({
@@ -6,6 +7,9 @@ const aoboshiOne = Aoboshi_One({
     weight: ['400']
 })
 export default function HeroTextContent() {
+
+   
+
     return (
         <div className={`w-full flex flex-col justify-center items-start gap-8 ${aoboshiOne.className}`}>
 
@@ -27,9 +31,11 @@ export default function HeroTextContent() {
                 outfits for every occasion and save on your favorite pieces.
             </p>
 
+            <Link href={"/shop"}>
             <button className="bg-[#13172b] text-white px-8 py-3 rounded-full hover:bg-navy-800 transition-colors duration-200">
                 Shop Now
             </button>
+            </Link>
         </div>
     )
 }

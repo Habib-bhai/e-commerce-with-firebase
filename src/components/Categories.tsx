@@ -2,6 +2,7 @@ import React from 'react'
 import CategoryCard from './CategoryCard'
 import Image from 'next/image'
 import { Aoboshi_One } from 'next/font/google'
+import Link from 'next/link'
 const aboshi = Aoboshi_One({
   subsets: ['latin'],
   weight: ['400']
@@ -23,7 +24,9 @@ export default function Categories() {
           </div>
 
 
+          <Link href={"/shop"}>
           <button className={`${aboshi.className} w-[165px] h-[56px] bg-black rounded-full text-white`}>View All</button>
+          </Link>
 
         </div>
 

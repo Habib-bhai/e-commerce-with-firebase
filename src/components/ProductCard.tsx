@@ -1,12 +1,13 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Heart, ShoppingCart, Star, Plus, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/app/context/CartContext';
 import { toast } from 'sonner';
+import { useWishlist } from '@/app/context/WishListContext';
 
 
 interface productCardProps {
@@ -34,6 +35,9 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
 
     const router = useRouter()
     const { addItem } = useCart();
+    const { state: wishlistState, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlist()
+
+
 
     const [isHovered, setIsHovered] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
@@ -41,7 +45,13 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
 
     const imageUrl: string = imgSrc && imgSrc[0]?.asset
         ? urlFor(imgSrc[0].asset).url()
-        : '/placeholder-image.jpg'
+        : '/placeholder-image.jpg';
+
+
+    useEffect(() => {
+        setIsLiked(wishlistState.items.some(item => item.id === slug.current));
+    }, [wishlistState, slug]);
+
 
     const handleAddToCart = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -55,7 +65,22 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
         toast("Product added to cart");
     }
 
-
+    const handleToggleWishlist = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (isLiked) {
+            removeFromWishlist(slug.current);
+            toast.success(`${name} removed from wishlist`);
+        } else {
+            addToWishlist({
+                id: slug.current,
+                name,
+                price: Price,
+                image: imageUrl
+            });
+            toast.success(`${name} added to wishlist`);
+        }
+        setIsLiked(!isLiked);
+    }
 
     return (
         <div onClick={() => router.push(`/shop/${slug.current}`)} className="relative w-[310px] mt-10 ">
@@ -155,12 +180,11 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
                             <div className="flex gap-2">
                                 {/* Like button */}
                                 <button
-                                    onClick={() => setIsLiked(!isLiked)}
+                                    onClick={handleToggleWishlist}
                                     className="p-2 rounded-full bg-white shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group"
                                 >
                                     <Heart
-                                        className={`h-5 w-5 transition-all duration-300 ${isLiked ? 'fill-[#dc2626] text-pink-500 scale-110' : 'text-gray-400'
-                                            } group-hover:scale-110`}
+                                        className={`h-5 w-5 transition-all duration-300 ${isLiked ? 'fill-[#dc2626] text-pink-500 scale-110' : 'text-gray-400'} group-hover:scale-110`}
                                     />
                                 </button>
 

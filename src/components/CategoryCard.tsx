@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import { Aoboshi_One } from 'next/font/google'
+import Link from 'next/link'
 const aboshi = Aoboshi_One({
     subsets: ['latin'],
     weight: ['400']
@@ -12,11 +13,12 @@ export default function CategoryCard({ category, items, imgsrc }: { category: st
 
             <Image src={`/images/categories/${imgsrc}`} alt='category' height={500} width={500} className='w-[180px] h-[180px] object-cover rounded-full z-10' />
 
-
-            <div className={`${aboshi.className} group bg-white w-full h-[180px] pb-5 flex flex-col justify-end items-center -mt-20 transition-colors duration-500 ease-in-out hover:bg-[#cc0d39] hover:text-white`}>
+             <Link href={"/shop"} className='group bg-white w-full h-[180px] pb-5 flex flex-col justify-end items-center -mt-20 transition-colors duration-500 ease-in-out hover:bg-[#cc0d39] hover:text-white'>
+            <div className={`${aboshi.className} `}>
                 <h1 className='text-xl'>{category}</h1>
                 <p className='transition-colors duration-500 ease-in-out text-sm text-gray-600 group-hover:text-white'>{items} items</p>
             </div>
+             </Link>   
         </div>
     )
 }

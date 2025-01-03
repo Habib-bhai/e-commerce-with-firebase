@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
         export default function CollectionOne({discount, collectionHeading, imgSrc, bgfrom, bgto}: {discount: number, collectionHeading: string, imgSrc: string, bgfrom:string, bgto:string}) {
@@ -28,9 +29,11 @@ import React from 'react'
                     <div className="w-48 border-t-2 border-dotted border-white" />
 
                     {/* CTA Button */}
+                    <Link href={"/shop"}>
                     <button className="text-white border-2 border-white rounded-full   w-[133px] h-[35px] hover:bg-white hover:text-purple-600 transition-colors">
                         Shop Now
                     </button>
+                    </Link>
                 </div>
 
                 {/* Right Side - Image */}

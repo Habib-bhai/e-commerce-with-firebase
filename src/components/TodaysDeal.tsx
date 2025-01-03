@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Aoboshi_One } from 'next/font/google'
+import Link from "next/link";
 
 
 const aboshi = Aoboshi_One({
@@ -178,6 +179,7 @@ export default function TodaysDeal() {
                                     key={product.id}
                                     className="w-full flex-shrink-0 flex flex-col md:flex-row justify-center items-center"
                                 >
+                                    
                                     <div className="relative md:w-[320px] w-[236px] h-[283px] bg-white">
                                         <Image
                                             src={product.image}
@@ -202,9 +204,11 @@ export default function TodaysDeal() {
                                             </div>
                                         </div>
 
-                                        <h2 className="text-xl font-semibold text-gray-800 mb-8">
+                                         <Link href={"/shop"}>
+                                        <h2 className="text-xl font-semibold text-gray-800 mb-8 hover:text-[#cc0d39]">
                                             {product.title}
                                         </h2>
+                                         </Link>           
 
                                         <div className="flex justify-between mb-2">
                                             {[
