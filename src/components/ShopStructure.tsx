@@ -1,27 +1,23 @@
 "use client"
 
-import React, { useEffect } from 'react'
-import { useState } from "react"
+import React, { useEffect, useState } from 'react'
 import { Slider } from "@/components/ui/slider"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import ProductCard from "@/components/ProductCard"
-import { SlidersHorizontal } from 'lucide-react'
+import { SlidersHorizontal, Search } from 'lucide-react'
 import { SanityData } from '@/app/shop/page'
 
-
 export default function ShopStructure({ sanityData }: { sanityData: SanityData[] }) {
-
   const [showFilters, setShowFilters] = useState(false)
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-  const [priceRange, setPriceRange] = useState([0, 100])
-
+  const [priceRange, setPriceRange] = useState([0, 400])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [searchQuery, setSearchQuery] = useState('')
   const [data] = useState<SanityData[]>(sanityData)
-
-  const [filteredData, setFilteredData] = useState<SanityData[]>(data);
-
+  const [filteredData, setFilteredData] = useState<SanityData[]>(data)
 
   const categories = [
     { name: "Women's Clothing", count: 45 },
@@ -33,7 +29,6 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
 
   const sizes = ["XS", "S", "M", "L", "XL"]
   const tags = ["New Arrival", "Sale", "Popular", "Premium", "Men Hoodies", "Women Hoodies", "denim", "shirts"]
-
 
   const toggleCategory = (category: string) => {
     setSelectedCategories((prev: string[]) =>
@@ -59,46 +54,54 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
     )
   }
 
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    // Trigger filtering when search is submitted
+    filterProducts()
+  }
 
-  useEffect(() => {
+  const filterProducts = () => {
     const filtered = data.filter(product => {
-      // Convert category strings to lowercase
-      const productCategory = product.category?.toLowerCase();
-      const selectedCats = selectedCategories.map(c => c.toLowerCase());
+      const productCategory = product.category?.toLowerCase()
+      const selectedCats = selectedCategories.map(c => c.toLowerCase())
+      const productSizes = product.sizes?.map(s => s.toLowerCase())
+      const selectedSizesLower = selectedSizes.map(s => s.toLowerCase())
+      const productTags = product.tags?.map(t => t.toLowerCase())
+      const selectedTagsLower = selectedTags.map(t => t.toLowerCase())
+      const searchQueryLower = searchQuery.toLowerCase()
 
       if (selectedCategories.length && !selectedCats.includes(productCategory)) {
-        return false;
+        return false
       }
 
       if (product.price < priceRange[0] || product.price > priceRange[1]) {
-        return false;
+        return false
       }
-
-      // Convert size strings to lowercase
-      const productSizes = product.sizes?.map(s => s.toLowerCase());
-      const selectedSizesLower = selectedSizes.map(s => s.toLowerCase());
 
       if (selectedSizes.length && !productSizes?.some(size =>
         selectedSizesLower.includes(size))) {
-        return false;
+        return false
       }
-
-      // Convert tags to lowercase
-      const productTags = product.tags?.map(t => t.toLowerCase());
-      const selectedTagsLower = selectedTags.map(t => t.toLowerCase());
 
       if (selectedTags.length && !selectedTagsLower.some(tag =>
         productTags?.includes(tag))) {
-        return false;
+        return false
       }
 
-      return true;
-    });
+      if (searchQuery && !productTags?.some(tag =>
+        tag.toLowerCase().includes(searchQueryLower))) {
+        return false
+      }
 
-    setFilteredData(filtered);
-  }, [data, selectedCategories, priceRange, selectedSizes, selectedTags]);
+      return true
+    })
 
+    setFilteredData(filtered)
+  }
 
+  useEffect(() => {
+    filterProducts()
+  }, [data, selectedCategories, priceRange, selectedSizes, selectedTags, searchQuery])
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -114,22 +117,32 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
       <div className="flex flex-col lg:flex-row gap-8">
         <aside className={`lg:w-64 flex-shrink-0 ${showFilters ? 'block' : 'hidden lg:block'}`}>
           <div className="space-y-6">
+            <form onSubmit={handleSearch} className="flex items-center space-x-2">
+              <Input
+                type="text"
+                placeholder="Search tags..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button type="submit" size="icon">
+                <Search className="h-4 w-4" />
+                <span className="sr-only">Search</span>
+              </Button>
+            </form>
+
             <div>
               <h3 className="font-semibold mb-4">Product Categories</h3>
               <div className="space-y-2">
-
-                {
-                  categories.map((category) => (
-                    <label key={category.name} className="flex items-center gap-2">
-                      <Checkbox
-                        checked={selectedCategories.includes(category.name)}
-                        onCheckedChange={() => toggleCategory(category.name)}
-                      />
-                      <span className="text-sm">{category.name}</span>
-                      <span className="text-sm text-muted-foreground ml-auto">({category.count})</span>
-                    </label>
-                  ))}
-
+                {categories.map((category) => (
+                  <label key={category.name} className="flex items-center gap-2">
+                    <Checkbox
+                      checked={selectedCategories.includes(category.name)}
+                      onCheckedChange={() => toggleCategory(category.name)}
+                    />
+                    <span className="text-sm">{category.name}</span>
+                    <span className="text-sm text-muted-foreground ml-auto">({category.count})</span>
+                  </label>
+                ))}
               </div>
             </div>
 
@@ -153,7 +166,6 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
             <div>
               <h3 className="font-semibold mb-4">Size</h3>
               <div className="flex flex-wrap gap-2">
-
                 {sizes.map((size) => (
                   <Button
                     key={size}
@@ -186,19 +198,6 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
 
         <main className="flex-1">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {/* {data.map((product:SanityData, index) => (
-              <ProductCard
-                key={index}
-                name={product.name}
-                imgSrc={product.image}
-                Price={product.price}
-                descrition={product.description}
-                reviews={product.reviews}
-                slug={product.slug}
-                premium={product.tags?.includes("Premium")}
-                newProduct={product.tags?.includes("New Arrival")}
-              />
-            ))} */}
             {filteredData.map((product: SanityData, index) => (
               <ProductCard
                 key={index}
@@ -218,3 +217,4 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
     </div>
   )
 }
+

@@ -27,7 +27,7 @@ export interface fetchProduct {
 
 async function getData() {
     const data = await client.fetch(`
-    *[_type == "product"  ][6...12] {
+    *[_type == "product"  ] {
   name,
   price,
     slug,
