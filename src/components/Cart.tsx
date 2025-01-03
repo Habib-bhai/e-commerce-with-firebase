@@ -1,9 +1,9 @@
 'use client'
 
-import {  X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { useCart } from '@/app/context/CartContext' 
+import { useCart } from '@/app/context/CartContext'
 import Image from 'next/image'
 
 export function Cart() {
@@ -13,7 +13,7 @@ export function Cart() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="relative">
-          <Image src={"/images/icons/shopping-bag.svg"} alt='search' height={20} width={20} />
+          <Image src={"/images/icons/shopping-bag.svg"} alt='search' height={20} width={20} className='h-8 w-8 md:h-5 md:w-5' />
           {state.items.length > 0 && (
             <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
               {state.items.length}
@@ -24,7 +24,7 @@ export function Cart() {
       <SheetContent className="w-[400px] sm:w-[540px] overflow-y-scroll">
         <SheetHeader className="flex flex-row items-center justify-between">
           <SheetTitle>My cart</SheetTitle>
-          
+
         </SheetHeader>
         <div className="mt-8 space-y-4 ">
           {state.items.map((item) => (

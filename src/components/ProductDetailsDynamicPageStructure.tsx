@@ -10,6 +10,8 @@ import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { fetchedData } from '@/app/shop/[slug]/page'
+import { useCart } from '@/app/context/CartContext'
+import { toast } from "sonner"
 
 
 
@@ -30,11 +32,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
 
     const basePrice = data?.price || 0
     const finalPrice = basePrice + sizePrice
-
-    const handleAddToCart = () => {
-        setIsAddedToCart(true)
-        setTimeout(() => setIsAddedToCart(false), 2000)
-    }
+    const {addItem} = useCart()
 
     const getPriceIncrement = (size: string) => {
         const normalizedSize = size.toLowerCase();
@@ -63,7 +61,20 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
         setQuantity(1);
     }, [selectedSize]);
 
-
+    const handleAddToCart = () => {
+        if (data && selectedSize) {
+            addItem({
+                id: `${data.slug}-${selectedSize}`,
+                name: `${data.name} (${selectedSize})`,
+                price: finalPrice,
+                image: data.image && data.image[0] ? urlFor(data.image[0]).url() : "",
+                quantity: quantity
+            });
+            setIsAddedToCart(true);
+            toast("Product added to cart");
+            setTimeout(() => setIsAddedToCart(false), 2000);
+        }
+    };
 
 
     return (

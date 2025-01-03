@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/app/context/CartContext';
+import { toast } from 'sonner';
 
 
 interface productCardProps {
@@ -51,6 +52,7 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
             image: imageUrl,
             quantity: 1
         });
+        toast("Product added to cart");
     }
 
 

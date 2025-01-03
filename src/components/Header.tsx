@@ -74,8 +74,8 @@ export default function Header() {
                     <Image src={"/images/icons/star.svg"} alt='search' height={15} width={15} />
                     <Image src={"/images/icons/heart.svg"} alt='search' height={20} width={20} />
                     <Image src={"/images/icons/star.svg"} alt='search' height={15} width={15} />
-                    
                     <Cart />
+                    
 
                 </div>
 
@@ -95,8 +95,8 @@ export default function Header() {
                     <div className='flex justify-start items-center gap-2' >
                         <Image src={"/images/icons/heart.svg"} alt='search' height={40} width={40} />
                         <Image src={"/images/icons/star.svg"} alt='search' height={20} width={20} />
-                        <Image src={"/images/icons/shopping-bag.svg"} alt='search' height={40} width={40} />
-
+                        {/* <Image src={"/images/icons/shopping-bag.svg"} alt='search' height={40} width={40} /> */}
+                        <Cart />
                     </div>
                 </div>
 
