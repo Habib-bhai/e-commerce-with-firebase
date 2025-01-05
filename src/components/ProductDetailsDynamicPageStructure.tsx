@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react'
-import { Heart, Share2, Minus, Plus, ShoppingCart, Check} from 'lucide-react'
+import { Heart, Share2, Minus, Plus, ShoppingCart, Check } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ZoomImage } from '@/components/zoom_image'
@@ -24,14 +24,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
     const [isFavorite, setIsFavorite] = useState(false)
     const [data] = useState<fetchedData>(SanityData)
     const [sizePrice, setSizePrice] = useState(0)
-    const [ , setShowStockAlert] = useState(false)
-
-
-
-    
-
-    // if (data?.color) setSelectedColor(data.color);
-    // if (data?.sizes?.length > 0) setSelectedSize(data.sizes[0])
+    const [, setShowStockAlert] = useState(false)
 
     const basePrice = data?.price || 0
     const finalPrice = basePrice + sizePrice
@@ -254,14 +247,14 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                         )}
 
                         {/* Quantity Selection */}
-                        <div className="space-y-2">
+                        <div className="space-y-2 ">
                             <div className="flex justify-between items-center">
                                 <span className="text-sm font-medium">Quantity</span>
                                 <span className="text-sm text-gray-500">
                                     {data?.quantity ? `${data.quantity} in stock` : 'Out of stock'}
                                 </span>
                             </div>
-                            <div className="flex items-center gap-4 flex-wrap">
+                            <div className="flex  md:flex-row flex-col items-start md:items-center gap-4 flex-wrap">
                                 <div className="flex items-center border rounded-xl overflow-hidden">
                                     <button
                                         onClick={() => handleQuantityChange(quantity - 1)}
@@ -284,7 +277,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
 
                                 {/* Add to Cart Button */}
                                 <Button
-                                    className="flex-1 h-12 rounded-xl relative overflow-hidden"
+                                    className=" flex md:flex-1 w-32 md:w-auto  md:h-12 rounded-xl relative overflow-hidden"
                                     onClick={handleAddToCart}
                                     disabled={!data?.quantity || data.quantity === 0}
                                 >
@@ -314,24 +307,26 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                                 </Button>
 
                                 {/* Favorite and Share Buttons */}
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-12 w-12 rounded-xl"
-                                    onClick={handleToggleWishlist}
-                                >
-                                    <Heart
-                                        className={`w-4 h-4 transition-colors ${isFavorite ? 'fill-red-500 stroke-red-500' : ''
-                                            }`}
-                                    />
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    className="h-12 w-12 rounded-xl"
-                                >
-                                    <Share2 className="w-4 h-4" />
-                                </Button>
+                                <div className='flex gap-5'>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        className="h-12 w-12 rounded-xl"
+                                        onClick={handleToggleWishlist}
+                                    >
+                                        <Heart
+                                            className={`w-4 h-4 transition-colors ${isFavorite ? 'fill-red-500 stroke-red-500' : ''
+                                                }`}
+                                        />
+                                    </Button>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        className="h-12 w-12 rounded-xl"
+                                    >
+                                        <Share2 className="w-4 h-4" />
+                                    </Button>
+                                </div>
                             </div>
                         </div>
 
