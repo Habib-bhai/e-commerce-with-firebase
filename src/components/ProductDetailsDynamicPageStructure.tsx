@@ -27,6 +27,9 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
     const [ , setShowStockAlert] = useState(false)
 
 
+
+    
+
     // if (data?.color) setSelectedColor(data.color);
     // if (data?.sizes?.length > 0) setSelectedSize(data.sizes[0])
 

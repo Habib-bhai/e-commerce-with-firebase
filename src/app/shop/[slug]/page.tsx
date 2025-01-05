@@ -1,5 +1,6 @@
 import ProductDetailsDynamicPageStructure from "@/components/ProductDetailsDynamicPageStructure"
 import { client } from "@/sanity/lib/client"
+import { groq } from "next-sanity"
 
 
 
@@ -28,9 +29,8 @@ export interface fetchedData {
 }
 
 
-async function getData(slug: string) {
-  const result = await client.fetch(`
-    *[_type == "product" && slug.current == "${slug}"][0] {
+const query = groq`
+    *[_type == "product" && slug.current == $slug][0] {
       name,
       price,
       slug,
@@ -46,7 +46,16 @@ async function getData(slug: string) {
       category,
       color
     }
-  `)
+  `
+
+
+async function getData(slug: string) {
+
+
+  const result = await client.fetch(query, { slug }, {
+    cache: "force-cache",
+    next: {revalidate: 500}
+  })
   return result
 
 }
