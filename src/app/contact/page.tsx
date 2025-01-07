@@ -24,7 +24,7 @@ export default function ContactPage() {
           {/* Office Locations Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {/* Australia Office */}
-            <div className="space-y-2">
+            <div className="space-y-2 bg-white p-5">
               <h3 className="text-red-500 font-medium">Australia Office:</h3>
               <p className="text-sm text-gray-600">
                 Act 555 753 Centenary Village, East<br />
@@ -42,7 +42,7 @@ export default function ContactPage() {
             </div>
 
             {/* England Office */}
-            <div className="space-y-2">
+            <div className="space-y-2 bg-white p-5">
               <h3 className="text-red-500 font-medium">England Office:</h3>
               <p className="text-sm text-gray-600">
                 68098 Balminger Square, Gradytown, KY<br />
@@ -60,7 +60,7 @@ export default function ContactPage() {
             </div>
 
             {/* Canada Office */}
-            <div className="space-y-2">
+            <div className="space-y-2 bg-white p-5">
               <h3 className="text-red-500 font-medium">Canada Office:</h3>
               <p className="text-sm text-gray-600">
                 9/8 Carroll Squares, North Minerva, VA 48428,<br />

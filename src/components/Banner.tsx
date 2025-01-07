@@ -10,7 +10,7 @@ export default function AboutHeader() {
   const path = usePathname()
   return (
     <>
-        <header className="relative min-h-[300px] md:min-h-[400px] overflow-hidden bg-[#f8f3ef]">
+        <header className="relative min-h-[200px] md:min-h-[400px] overflow-hidden bg-[#f8f3ef]">
       
 
       {/* Content Container */}
