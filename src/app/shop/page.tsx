@@ -1,6 +1,6 @@
 import ShopStructure from "@/components/ShopStructure"
 import { client } from "@/sanity/lib/client"
-
+import Banner from '@/components/Banner'
 
 
 export interface SanityData {
@@ -60,6 +60,9 @@ export default async function ShopPage() {
   const Data: SanityData[] = await getData()
 
   return (
+    <>
+    <Banner />
     <ShopStructure sanityData={Data} />
+    </>
   )
 }

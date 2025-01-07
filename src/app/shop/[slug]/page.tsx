@@ -1,7 +1,7 @@
 import ProductDetailsDynamicPageStructure from "@/components/ProductDetailsDynamicPageStructure"
 import { client } from "@/sanity/lib/client"
 import { groq } from "next-sanity"
-
+import Banner from '@/components/Banner'
 
 
 export interface fetchedData {
@@ -63,7 +63,10 @@ async function getData(slug: string) {
 export default async function ProductDetail({ params }: { params: { slug: string } }) {
   const Data = await getData(params.slug)
   return (
+    <>
+    <Banner />
     <ProductDetailsDynamicPageStructure SanityData={Data} />
+    </>
   )
 }
 
