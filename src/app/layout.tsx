@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { CartProvider } from "./context/CartContext";
 import { Toaster } from "@/components/ui/sonner"
 import { WishlistProvider } from "./context/WishListContext";
-import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
+import { ClerkProvider} from "@clerk/nextjs"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

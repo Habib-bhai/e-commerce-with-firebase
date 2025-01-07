@@ -68,7 +68,7 @@ export default function AboutUs() {
               <div className="flex items-center gap-4">
                 <div className="text-5xl font-bold text-primary">25</div>
                 <div className="text-sm font-medium leading-tight">
-                  Year's
+                  Year&lsquo;s
                   <br />
                   Experience
                 </div>
@@ -91,7 +91,7 @@ export default function AboutUs() {
             </h2>
             <p className="text-gray-600 leading-relaxed">
               There are many variations of passages of Lorem Ipsum available, but the our majority have
-              suffered alteration in some form, by injected humour, or randomised words which don't look
+              suffered alteration in some form, by injected humour, or randomised words which don&lsquo;t look
               even slightly believable you are going to.
             </p>
           </motion.div>
