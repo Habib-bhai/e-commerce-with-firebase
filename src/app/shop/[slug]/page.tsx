@@ -1,7 +1,7 @@
 import ProductDetailsDynamicPageStructure from "@/components/ProductDetailsDynamicPageStructure"
 import { client } from "@/sanity/lib/client"
 import { groq } from "next-sanity"
-import Banner from '@/components/Banner'
+
 
 
 export interface fetchedData {
