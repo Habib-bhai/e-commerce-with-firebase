@@ -105,7 +105,7 @@ export default function Footer() {
 
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Company Info */}
             <div className="space-y-6">
               <Image
@@ -171,43 +171,7 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Recent Posts from */}
-            <div>
-              <h3 className="text-lg font-semibold mb-6">Recent Post</h3>
-              <div className="space-y-4">
-                {[
-                  {
-                    title: 'Tips on Finding Affordable Fashion Gems Online',
-                    date: 'July 11, 2023',
-                    image: '/images/featured/e-com-feature-product-14.png'
-                  },
-                  {
-                    title: 'Mastering the Art of Fashion E-commerce Marketing',
-                    date: 'July 11, 2024',
-                    image: '/images/featured/e-com-feature-product-10.png'
-                  },
-                  {
-                    title: 'Must-Have Trends You Can Shop Online Now',
-                    date: 'July 11, 2024',
-                    image: '/images/featured/e-com-feature-product-5.png'
-                  }
-                ].map((post) => (
-                  <div key={post.title} className="flex gap-4">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      className="w-20 h-20 object-cover rounded"
-                      height={100}
-                      width={100}
-                    />
-                    <div>
-                      <h4 className="font-medium text-sm">{post.title}</h4>
-                      <p className="text-gray-600 text-sm">{post.date}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+           
           </div>
         </div>
       </footer>

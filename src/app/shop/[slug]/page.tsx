@@ -64,7 +64,6 @@ export default async function ProductDetail({ params }: { params: { slug: string
   const Data = await getData(params.slug)
   return (
     <>
-    <Banner />
     <ProductDetailsDynamicPageStructure SanityData={Data} />
     </>
   )

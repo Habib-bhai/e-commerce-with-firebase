@@ -45,10 +45,21 @@ export default function Header() {
                     <p>Follow Us</p>
                     <div className='flex gap-2'>
 
-                        <Image src={"/images/icons/facebook.svg"} width={25} height={25} alt={"facebook"} />
-                        <Image src={"/images/icons/instagram.svg"} width={25} height={25} alt={"instagram"} />
-                        <Image src={"/images/icons/twitter.png"} width={20} height={20} alt={"twitter"} className='object-contain' />
-                        <Image src={"/images/icons/linkedin-161.svg"} width={20} height={20} alt={"youtube"} />
+                        <Link href={"/"}>
+                            <Image src={"/images/icons/facebook.svg"} width={25} height={25} alt={"facebook"} />
+                        </Link>
+
+                        <Link href={"/"}>
+                            <Image src={"/images/icons/instagram.svg"} width={25} height={25} alt={"instagram"} />
+                        </Link>
+
+                        <Link href={"/"}>
+                            <Image src={"/images/icons/twitter.png"} width={20} height={20} alt={"twitter"} className='object-contain' />
+                        </Link>
+
+                        <Link href={"/"}>
+                            <Image src={"/images/icons/linkedin-161.svg"} width={20} height={20} alt={"youtube"} />
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -89,7 +100,6 @@ export default function Header() {
                     <div className='flex justify-start items-center gap-2' >
                         <Wishlist />
                         <Image src={"/images/icons/star.svg"} alt='search' height={20} width={20} />
-                        {/* <Image src={"/images/icons/shopping-bag.svg"} alt='search' height={40} width={40} /> */}
                         <Cart />
                     </div>
                 </div>
@@ -97,10 +107,10 @@ export default function Header() {
                 {/* routes */}
 
                 <div className={`${aoboshiOne.className} text-2xl flex flex-col  justify-center items-center mt-10 mb-12 gap-5 `}>
-                    <Link href="/">Home</Link>
-                    <Link href="/shop">shop</Link>
-                    <Link href="/about">About</Link>
-                    <Link href="/contact">Contact</Link>
+                    <Link onClick={() => setSidebar("hidden")} href="/">Home</Link>
+                    <Link onClick={() => setSidebar("hidden")} href="/shop">shop</Link>
+                    <Link onClick={() => setSidebar("hidden")} href="/about">About</Link>
+                    <Link onClick={() => setSidebar("hidden")} href="/contact">Contact</Link>
                 </div>
 
                 <Image src={"/images/icons/cross.svg"} alt='close' height={40} width={40} onClick={() => setSidebar("hidden")} className='absolute right-5 top-1' />
