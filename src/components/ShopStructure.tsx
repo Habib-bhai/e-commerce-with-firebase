@@ -100,7 +100,9 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
   }
 
   useEffect(() => {
+    // eslint-disable-next-line
     filterProducts()
+    // eslint-disable-next-line
   }, [data, selectedCategories, priceRange, selectedSizes, selectedTags, searchQuery])
 
   return (

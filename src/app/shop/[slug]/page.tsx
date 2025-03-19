@@ -59,7 +59,8 @@ export interface fetchedData {
 
 // }
 
-export default async function ProductDetail({ params }: { params: { slug: string } }) {
+// { params }: { params: { slug: string } }
+export default async function ProductDetail() {
   // const Data = await getData(params.slug)
   return (
     <>
