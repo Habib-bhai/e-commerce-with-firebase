@@ -50,7 +50,7 @@ export default function ShopPage() {
     if (user == null && !UserSession) {
       router.push("/sign-up");
     }
-    
+    // eslint-disable-next-line
   }, [user, UserSession]);
 
 

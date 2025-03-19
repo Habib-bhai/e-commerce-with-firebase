@@ -23,6 +23,7 @@ export default function SignupPage() {
     setError(null)
 
     try {
+// eslint-disable-next-line
       const  result  = await signUp(email, password)
       // console.log(result)
       sessionStorage.setItem('user', "logedin")

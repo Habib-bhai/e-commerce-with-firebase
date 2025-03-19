@@ -23,6 +23,7 @@ export default function SigninPage() {
     setError(null)
 
     try {
+        // eslint-disable-next-line
       const { result } = await signIn(email, password)
       // successful signin
       sessionStorage.setItem("user", "logedin")
@@ -108,7 +109,7 @@ export default function SigninPage() {
             </CardContent>
             <CardFooter className="flex justify-center">
               <div className="text-sm text-center">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <a href="/sign-up" className="text-primary font-medium hover:underline">
                   Create account
                 </a>

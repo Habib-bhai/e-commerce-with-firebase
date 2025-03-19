@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext, createContext, ReactNode } from "react";
-import { onAuthStateChanged, getAuth, User } from "firebase/auth";
+import {  getAuth, User } from "firebase/auth";
 import firebase_app from "@/app/firebase/config";
 import Loading from "@/app/loading";
 
@@ -28,7 +28,7 @@ export const useAuthContext = (): AuthContextType => {
 
 // AuthContextProvider component
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [loading, setLoading] = React.useState(false);
+  const [loading] = React.useState(false);
   const [user] = useAuthState(auth);
   console.log(user)
 
