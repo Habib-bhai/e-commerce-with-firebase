@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import ProductCard from './ProductCard'
 import { Aoboshi_One } from 'next/font/google'
-import { client } from '@/sanity/lib/client'
+// import { client } from '@/sanity/lib/client'
 
 
 
@@ -31,28 +31,28 @@ interface fetchProduct {
   description: string
 }
 
-async function getData() {
-  const data = await client.fetch(`
-    *[_type == "product"  ][0...6] {
-  name,
-  price,
-    slug,
-    image,
-    newProduct,
-    premiumProduct,
-    reviews,
-    description
-}
-    `)
+// async function getData() {
+//   const data = await client.fetch(`
+//     *[_type == "product"  ][0...6] {
+//   name,
+//   price,
+//     slug,
+//     image,
+//     newProduct,
+//     premiumProduct,
+//     reviews,
+//     description
+// }
+//     `)
 
-  return data
-}
+//   return data
+// }
 
 export const revalidate = 60
 
 export default async function FeaturedProducts() {
 
-  const Data: fetchProduct[] = await getData()
+  // const Data: fetchProduct[] = await getData()
   
   
   return (
@@ -73,7 +73,7 @@ export default async function FeaturedProducts() {
     <div className="w-full flex justify-evenly items-center flex-wrap">
 
       {
-        Data.map((item: fetchProduct) => (
+        [].map((item: fetchProduct) => (
           <ProductCard slug={item.slug} key={item.slug.current} Price={item.price}  descrition={item.description} newProduct={item.newProduct} premium={item.premiumProduct} name={item.name} reviews={item.reviews} imgSrc={item.image}   />
         ))
       }

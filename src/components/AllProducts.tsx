@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { client } from '@/sanity/lib/client'
+// import { client } from '@/sanity/lib/client'
 import AllProductsUI from './AllProductsUI';
 
 export interface fetchProduct {
@@ -25,23 +25,23 @@ export interface fetchProduct {
 
 
 
-async function getData() {
-    const data = await client.fetch(`
-    *[_type == "product"  ] {
-  name,
-  price,
-    slug,
-    image,
-    newProduct,
-    premiumProduct,
-    reviews,
-    description,
-    tags
-}
-    `)
+// async function getData() {
+// //     const data = await client.fetch(`
+// //     *[_type == "product"  ] {
+// //   name,
+// //   price,
+// //     slug,
+// //     image,
+// //     newProduct,
+// //     premiumProduct,
+// //     reviews,
+// //     description,
+// //     tags
+// // }
+// //     `)
 
-    return data
-}
+//     return data
+// }
 
 export const revalidate = 60
 
@@ -49,9 +49,9 @@ export const revalidate = 60
 
 export default async function AllProducts() {
 
-    const Data: fetchProduct[] = await getData()
+    // const Data: fetchProduct[] = await getData()
 
     return (
-        <AllProductsUI data={Data} />
+        <AllProductsUI data={[]} />
     )
 }

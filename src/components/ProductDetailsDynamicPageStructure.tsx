@@ -7,7 +7,7 @@ import { ZoomImage } from '@/components/zoom_image'
 import { SizeGuide } from '@/components/Size_Guide'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { urlFor } from '@/sanity/lib/image'
+// import { urlFor } from '@/sanity/lib/image'
 import { fetchedData } from '@/app/shop/[slug]/page'
 import { useCart } from '@/app/context/CartContext'
 import { toast } from "sonner"
@@ -69,7 +69,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                 id: `${data.slug}-${selectedSize}`,
                 name: `${data.name} (${selectedSize})`,
                 price: finalPrice,
-                image: data.image && data.image[0] ? urlFor(data.image[0]).url() : "",
+                image: data.image && data.image[0] ? "" : "",
                 quantity: quantity
             });
             setIsAddedToCart(true);
@@ -89,7 +89,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                 id: data.slug,
                 name: data.name,
                 price: data.price,
-                image: data.image && data.image[0] ? urlFor(data.image[0]).url() : "",
+                image: data.image && data.image[0] ? "" : "",
             });
             toast.success(`${data.name} added to wishlist`);
         }
@@ -112,7 +112,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                     {/* Image Gallery */}
                     <div className="space-y-4">
                         <ZoomImage
-                            src={data?.image && data.image[selectedImage] ? urlFor(data.image[selectedImage]).url() : ""}
+                            src={data?.image && data.image[selectedImage] ? "" : ""}
                             alt={`Product image ${selectedImage + 1}`}
                         />
                         <div className="grid grid-cols-4 gap-4">
@@ -126,7 +126,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                                             : 'hover:scale-95 opacity-60 hover:opacity-100'}`}
                                 >
                                     <Image
-                                        src={urlFor(image).url()}
+                                        src={""}
                                         alt={`Product view ${index + 1}`}
                                         fill
                                         className="object-cover"

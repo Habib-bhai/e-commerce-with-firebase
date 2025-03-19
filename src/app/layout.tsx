@@ -6,7 +6,8 @@ import Footer from "@/components/Footer";
 import { CartProvider } from "./context/CartContext";
 import { Toaster } from "@/components/ui/sonner"
 import { WishlistProvider } from "./context/WishListContext";
-import { ClerkProvider} from "@clerk/nextjs"
+import { AuthContextProvider } from "@/context/AuthContext";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,24 +31,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
         >
 
-          {/* <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton/>
-          </SignedIn> */}
 
           <CartProvider>
             <WishlistProvider>
 
               <Header />
+              <AuthContextProvider>
               {children}
+              </AuthContextProvider>
               <Toaster />
               <Footer />
 
@@ -55,6 +52,6 @@ export default function RootLayout({
           </CartProvider>
         </body>
       </html>
-    </ClerkProvider>
+    
   );
 }

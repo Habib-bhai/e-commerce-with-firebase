@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Heart, ShoppingCart, Star, Plus, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import { urlFor } from '@/sanity/lib/image';
+// import { urlFor } from '@/sanity/lib/image';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/app/context/CartContext';
 import { toast } from 'sonner';
@@ -44,7 +44,7 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
     const [showDetails, setShowDetails] = useState(false);
 
     const imageUrl: string = imgSrc && imgSrc[0]?.asset
-        ? urlFor(imgSrc[0].asset).url()
+        ? ''
         : '/placeholder-image.jpg';
 
 
