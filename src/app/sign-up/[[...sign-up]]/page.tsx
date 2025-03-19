@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ShoppingBag, ArrowRight, Loader2 } from "lucide-react"
-import signUp from "@/firebase/auth/signup"
+import signUp from "@/app/firebase/auth/signup"
 
 export default function SignupPage() {
   const [email, setEmail] = useState("")
@@ -24,9 +24,8 @@ export default function SignupPage() {
 
     try {
       const  result  = await signUp(email, password)
-
-      // successful signup
-      console.log(result)
+      // console.log(result)
+      sessionStorage.setItem('user', "logedin")
       router.push("/shop")
     } catch (err) {
       setError("An unexpected error occurred")
@@ -132,7 +131,7 @@ export default function SignupPage() {
               </div>
               <div className="text-sm text-center">
                 Already have an account?{" "}
-                <a href="/login" className="text-primary font-medium hover:underline">
+                <a href="/sign-in" className="text-primary font-medium hover:underline">
                   Sign in
                 </a>
               </div>

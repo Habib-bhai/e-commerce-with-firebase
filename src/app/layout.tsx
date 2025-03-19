@@ -1,3 +1,4 @@
+"use client"
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -20,10 +21,7 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata: Metadata = {
-  title: "Fashion-Bro",
-  description: "Fashion-Bro a ecommerce website for Fashion Lovers",
-};
+
 
 export default function RootLayout({
   children,

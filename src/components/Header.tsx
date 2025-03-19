@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { Aoboshi_One } from 'next/font/google';
 import { Cart } from './Cart';
 import { Wishlist } from './Wishlist';
+import { Button } from './ui/button';
+import { getAuth, signOut } from 'firebase/auth';
+import firebase_app from '@/app/firebase/config';
 
 const aoboshiOne = Aoboshi_One({
     subsets: ["latin"],
@@ -20,7 +23,7 @@ const dmsans = DM_Sans({
 export default function Header() {
 
     const [sidebar, setSidebar] = useState("hidden")
-
+    const auth = getAuth(firebase_app);
     return (
         <div className='overflow-x-hidden w-screen relative'>
             {/* primary part */}
@@ -86,6 +89,13 @@ export default function Header() {
                     <Image src={"/images/icons/star.svg"} alt='search' height={15} width={15} />
                     <Cart />
 
+                    <Button onClick={()=> {
+                        signOut(auth)
+                        sessionStorage.setItem('user',"")    
+
+                    }}>
+                        Sign Out
+                    </Button>
 
                 </div>
 

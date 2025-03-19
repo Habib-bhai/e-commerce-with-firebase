@@ -1,7 +1,7 @@
 import React from 'react'
 import { ArrowLeftRight, Package, ShoppingCart } from 'lucide-react';
 
-export default function loading() {
+export default function Loading() {
   return (
     <div className="flex items-center justify-center w-full h-screen bg-gradient-to-br from-purple-50 to-blue-50">
       <div className="relative">

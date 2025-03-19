@@ -1,18 +1,21 @@
 "use client";
 import React, { useContext, createContext, ReactNode } from "react";
 import { onAuthStateChanged, getAuth, User } from "firebase/auth";
-import firebase_app from "@/firebase/config";
+import firebase_app from "@/app/firebase/config";
+import Loading from "@/app/loading";
+
+import {useAuthState} from "react-firebase-hooks/auth"
 
 const auth = getAuth(firebase_app);
 
 // Define the shape of the context value
 interface AuthContextType {
-  user: User | undefined;
-  loading: boolean;
+  user: User | null | undefined;
+
 }
 
 // Create the context with a proper default value
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType >({user: null});
 
 // Custom hook to use the AuthContext
 export const useAuthContext = (): AuthContextType => {
@@ -25,21 +28,13 @@ export const useAuthContext = (): AuthContextType => {
 
 // AuthContextProvider component
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = React.useState<User | undefined>(undefined);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user || undefined);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const [loading, setLoading] = React.useState(false);
+  const [user] = useAuthState(auth);
+  console.log(user)
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
-      {loading ? <div>Loading...</div> : children}
+    <AuthContext.Provider value={{ user }}>
+      {loading ?  <Loading /> : children}
     </AuthContext.Provider>
   );
 };

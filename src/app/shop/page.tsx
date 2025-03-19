@@ -4,7 +4,7 @@ import ShopStructure from "@/components/ShopStructure"
 import Banner from '@/components/Banner'
 import { useAuthContext } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 
 export interface SanityData {
@@ -31,17 +31,35 @@ export interface SanityData {
   color: string
 }
 
-export default  function ShopPage() {
+export default function ShopPage() {
   const { user } = useAuthContext();
   const router = useRouter();
+  const [UserSession, setUserSession] = useState<string | null>("")
 
   useEffect(() => {
-    if (!router || typeof user === "undefined") return; // Ensure router is ready and user is defined
-    if (user == null) router.push("/sign-up");
-  }, [user, router]);
+    if (typeof window !== "undefined") {
+      setUserSession(sessionStorage.getItem("user"));
+    }
+  }, []);
+
+
+  useEffect(() => {
+    console.log("User:", user);
+    console.log("UserSession:", UserSession);
+
+    if (user == null && !UserSession) {
+      router.push("/sign-up");
+    }
+    
+  }, [user, UserSession]);
+
 
   // const Data: SanityData[] = await getData()
 
+
+  // if (!user && !UserSession){
+  //   router.push('/sign-up')
+  // }
   return (
     <>
       <Banner />
