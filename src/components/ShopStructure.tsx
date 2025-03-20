@@ -7,17 +7,33 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import ProductCard from "@/components/ProductCard"
 import { SlidersHorizontal, Search } from 'lucide-react'
-import { SanityData } from '@/app/shop/page'
 
-export default function ShopStructure({ sanityData }: { sanityData: SanityData[] }) {
+
+interface Product {
+  name: string;
+  image: string[]; // Array of image URLs
+  productSlug: string;
+  description: string;
+  newProduct: boolean; // true for some products and false for others
+  premiumProduct: boolean; // true for some products and false for others
+  sizes: string[]; // Array of strings representing different sizes
+  category: string;
+  reviews: number;
+  price: number;
+  quantity: number;
+  color: string;
+  tags: string[];
+  Brand: string;
+}
+
+export default function ShopStructure({ sanityData }: { sanityData: Product[] }) {
   const [showFilters, setShowFilters] = useState(false)
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState([0, 400])
   const [selectedSizes, setSelectedSizes] = useState<string[]>([])
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState('')
-  const [data] = useState<SanityData[]>(sanityData)
-  const [filteredData, setFilteredData] = useState<SanityData[]>(data)
+  const [filteredData, setFilteredData] = useState<Product[]>(sanityData)
 
   const categories = [
     { name: "Women's Clothing", count: 45 },
@@ -61,7 +77,7 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
   }
 
   const filterProducts = () => {
-    const filtered = data.filter(product => {
+    const filtered = sanityData.filter(product => {
       const productCategory = product.category?.toLowerCase()
       const selectedCats = selectedCategories.map(c => c.toLowerCase())
       const productSizes = product.sizes?.map(s => s.toLowerCase())
@@ -103,7 +119,8 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
     // eslint-disable-next-line
     filterProducts()
     // eslint-disable-next-line
-  }, [data, selectedCategories, priceRange, selectedSizes, selectedTags, searchQuery])
+  }, [sanityData, selectedCategories, priceRange, selectedSizes, selectedTags, searchQuery])
+
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -200,15 +217,15 @@ export default function ShopStructure({ sanityData }: { sanityData: SanityData[]
 
         <main className="flex-1">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {filteredData.map((product: SanityData, index) => (
+            {filteredData.map((product: Product, index) => (
               <ProductCard
                 key={index}
                 name={product.name}
-                imgSrc={product.image}
+                imgSrc={product.image[0]}
                 Price={product.price}
                 descrition={product.description}
                 reviews={product.reviews}
-                slug={product.slug}
+                slug={product.productSlug}
                 premium={product.tags?.includes("Premium")}
                 newProduct={product.tags?.includes("New Arrival")}
               />

@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import ProductCard from './ProductCard'
 import { Aoboshi_One } from 'next/font/google'
-import { fetchProduct } from './AllProducts'
 
 
 const aboshi = Aoboshi_One({
@@ -10,9 +9,26 @@ const aboshi = Aoboshi_One({
     weight: ['400']
 })
 
-export default function AllProductsUI({data}: {data:fetchProduct[]}) {
+
+interface Product {
+    name: string;
+    image: string[]; // Array of image URLs
+    productSlug: string;
+    description: string;
+    newProduct: boolean; // true for some products and false for others
+    premiumProduct: boolean; // true for some products and false for others
+    sizes: string[]; // Array of strings representing different sizes
+    category: string;
+    reviews: number;
+    price: number;
+    quantity: number;
+    color: string;
+    tags: string[];
+    Brand: string;
+  }
+export default function AllProductsUI({data}: {data:Product[]}) {
     const [selectedTags, setSelectedTags] = useState<string[]>([])
-    const [products, setProducts] = useState<fetchProduct[]>(data)
+    const [products, setProducts] = useState<Product[]>(data)
 
     const filterProducts = (tag: string) => {
         if (tag === 'all') {
@@ -88,8 +104,8 @@ export default function AllProductsUI({data}: {data:fetchProduct[]}) {
             <div className='mt-16 flex justify-center items-center flex-wrap gap-8'>
 
                 {
-                    products.map((item: fetchProduct) => (
-                        <ProductCard slug={item.slug} key={item.slug.current} Price={item.price} descrition={item.description} newProduct={item.newProduct} premium={item.premiumProduct} name={item.name} reviews={item.reviews} imgSrc={item.image} />
+                    products.map((item: Product) => (
+                        <ProductCard slug={item.productSlug} key={item.productSlug} Price={item.price} descrition={item.description} newProduct={item.newProduct} premium={item.premiumProduct} name={item.name} reviews={item.reviews} imgSrc={item.image[0]} />
                     ))
                 }
             </div>

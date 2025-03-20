@@ -1,92 +1,85 @@
+import { db } from "@/app/firebase/config"
 import ProductDetailsDynamicPageStructure from "@/components/ProductDetailsDynamicPageStructure"
+import { collection, getDocs } from "firebase/firestore"
 
 
 
 
-export interface fetchedData {
-  name: string
-  price: number
-  slug: string
-  image: {
-    _type: 'image'
-    asset: {
-      _ref: string
-      _type: 'reference'
-    }
-    key: string
-  }[]
-  newProduct: boolean
-  premiumProduct: boolean
-  reviews: number
-  description: string
-  tags: string[]
-  quantity: number
-  sizes: string[]
-  brand: string
-  category: string
-  color: string
+interface Product {
+  name: string;
+  image: string[]; // Array of image URLs
+  productSlug: string;
+  description: string;
+  newProduct: boolean; // true for some products and false for others
+  premiumProduct: boolean; // true for some products and false for others
+  sizes: string[]; // Array of strings representing different sizes
+  category: string;
+  reviews: number;
+  price: number;
+  quantity: number;
+  color: string;
+  tags: string[];
+  Brand: string;
+}
+
+async function getAllProducts(): Promise<Product[]> {
+  try {
+    const productsCollectionRef = collection(db, "products");
+    const querySnapshot = await getDocs(productsCollectionRef);
+
+    // console.log("Firestore docs:", querySnapshot.docs);
+
+    // Map the documents to the Product type
+    const products: Product[] = querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      // Type assertion to ensure the data matches the Product type
+      return {
+        name: data.name || "",
+        image: data.image || [],
+        productSlug: data.productSlug || "",
+        description: data.description || "",
+        newProduct: data.newProduct || false,
+        premiumProduct: data.premiumProduct || false,
+        sizes: data.sizes || [],
+        category: data.category || "",
+        reviews: data.reviews || 0,
+        price: data.price || 0,
+        quantity: data.quantity || 0,
+        color: data.color || "",
+        tags: data.tags || [],
+        Brand: data.Brand || "",
+      } as Product;
+    });
+
+    console.log("Products:", products);
+    return products;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return []; 
+  }
 }
 
 
-// const query = groq`
-//     *[_type == "product" && slug.current == $slug][0] {
-//       name,
-//       price,
-//       slug,
-//       image,
-//       newProduct,
-//       premiumProduct,
-//       reviews,
-//       description,
-//       tags,
-//       quantity,
-//       sizes,
-//       brand,
-//       category,
-//       color
-//     }
-//   `
 
 
-// async function getData(slug: string) {
 
 
-//   // const result = await client.fetch(query, { slug }, {
-//   //   cache: "force-cache",
-//   //   next: {revalidate: 500}
-//   // })
-//   return result
+export default async function ProductDetail({ params }: { params: { slug: string } }
+) {
+  const Data: Product[] = await getAllProducts()
 
-// }
+  
+  const filteredDetailsOfProduct= Data?.find((product: Product) => product.productSlug === params.slug) 
 
-// { params }: { params: { slug: string } }
-export default async function ProductDetail() {
-  // const Data = await getData(params.slug)
   return (
     <>
-      <ProductDetailsDynamicPageStructure SanityData={{
-        name: "string",
-        price: 2030,
-        slug: "string",
-        image: [{
-          _type: 'image',
-          asset: {
-            _ref: "string",
-            _type: 'reference'
-          },
-          key: "string"
-        }],
-        newProduct: true,
-        premiumProduct: true,
-        reviews: 20,
-        description: "string",
-        tags: [""],
-        quantity: 10,
-        sizes: ["h"],
-        brand: "string",
-        category: "string",
-        color: "string"
-      }} />
+      {
+          filteredDetailsOfProduct?
+        <ProductDetailsDynamicPageStructure SanityData={filteredDetailsOfProduct} />
+        :
+        undefined
+      }
     </>
   )
 }

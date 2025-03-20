@@ -8,25 +8,44 @@ import { SizeGuide } from '@/components/Size_Guide'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 // import { urlFor } from '@/sanity/lib/image'
-import { fetchedData } from '@/app/shop/[slug]/page'
 import { useCart } from '@/app/context/CartContext'
 import { toast } from "sonner"
 import { useWishlist } from '@/app/context/WishListContext';
 
 
 
-export default function ProductDetailsDynamicPageStructure({ SanityData }: { SanityData: fetchedData }) {
+interface Product {
+    name: string;
+    image: string[]; // Array of image URLs
+    productSlug: string;
+    description: string;
+    newProduct: boolean; // true for some products and false for others
+    premiumProduct: boolean; // true for some products and false for others
+    sizes: string[]; // Array of strings representing different sizes
+    category: string;
+    reviews: number;
+    price: number;
+    quantity: number;
+    color: string;
+    tags: string[];
+    Brand: string;
+  }
+
+  
+
+
+export default function ProductDetailsDynamicPageStructure({ SanityData }: { SanityData: Product }) {
     const [selectedImage, setSelectedImage] = useState(0)
     const [selectedColor, setSelectedColor] = useState<string | null>(SanityData?.color || null)
     const [selectedSize, setSelectedSize] = useState<string | null>(SanityData?.sizes?.[0] || null)
     const [quantity, setQuantity] = useState(1)
     const [isAddedToCart, setIsAddedToCart] = useState(false)
     const [isFavorite, setIsFavorite] = useState(false)
-    const [data] = useState<fetchedData>(SanityData)
+    // const [data] = useState<Product>(SanityData)
     const [sizePrice, setSizePrice] = useState(0)
     const [, setShowStockAlert] = useState(false)
 
-    const basePrice = data?.price || 0
+    const basePrice = SanityData?.price || 0
     const finalPrice = basePrice + sizePrice
     const { addItem } = useCart()
     const { state: wishlistState, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlist()
@@ -46,7 +65,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
 
 
     const handleQuantityChange = (newQuantity: number) => {
-        if (newQuantity > (data?.quantity || 0)) {
+        if (newQuantity > (SanityData?.quantity || 0)) {
             setShowStockAlert(true);
             setTimeout(() => setShowStockAlert(false), 3000);
         } else {
@@ -60,16 +79,16 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
     }, [selectedSize]);
 
     useEffect(() => {
-        setIsFavorite(wishlistState.items.some(item => item.id === data.slug));
-    }, [wishlistState, data.slug]);
+        setIsFavorite(wishlistState.items.some(item => item.id === SanityData.productSlug));
+    }, [wishlistState, SanityData.productSlug]);
 
     const handleAddToCart = () => {
-        if (data && selectedSize) {
+        if (SanityData && selectedSize) {
             addItem({
-                id: `${data.slug}-${selectedSize}`,
-                name: `${data.name} (${selectedSize})`,
+                id: `${SanityData.productSlug}-${selectedSize}`,
+                name: `${SanityData.name} (${selectedSize})`,
                 price: finalPrice,
-                image: data.image && data.image[0] ? "" : "",
+                image: SanityData.image && SanityData.image[0] ? "" : "",
                 quantity: quantity
             });
             setIsAddedToCart(true);
@@ -82,16 +101,16 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
     const handleToggleWishlist = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (isFavorite) {
-            removeFromWishlist(SanityData.slug);
+            removeFromWishlist(SanityData.productSlug);
             toast.success(`${SanityData.name} removed from wishlist`);
         } else {
             addToWishlist({
-                id: data.slug,
-                name: data.name,
-                price: data.price,
-                image: data.image && data.image[0] ? "" : "",
+                id: SanityData.productSlug,
+                name: SanityData.name,
+                price: SanityData.price,
+                image: SanityData.image && SanityData.image[0] ? "" : "",
             });
-            toast.success(`${data.name} added to wishlist`);
+            toast.success(`${SanityData.name} added to wishlist`);
         }
         setIsFavorite(!isFavorite);
     }
@@ -100,10 +119,10 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Brand Badge */}
-                {data?.brand && (
+                {SanityData?.Brand && (
                     <div className="mb-6">
                         <Badge variant="outline" className="text-sm">
-                            {data.brand}
+                            {SanityData.Brand}
                         </Badge>
                     </div>
                 )}
@@ -112,11 +131,11 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                     {/* Image Gallery */}
                     <div className="space-y-4">
                         <ZoomImage
-                            src={data?.image && data.image[selectedImage] ? "" : ""}
+                            src={SanityData?.image && SanityData.image[selectedImage] ? "" : ""}
                             alt={`Product image ${selectedImage + 1}`}
                         />
                         <div className="grid grid-cols-4 gap-4">
-                            {data?.image?.map((image, index) => (
+                            {SanityData?.image?.map((image, index) => (
                                 <button
                                     key={index}
                                     onClick={() => setSelectedImage(index)}
@@ -141,45 +160,45 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                         {/* Product Header */}
                         <div className="space-y-2">
                             <div className="flex items-center gap-2 flex-wrap">
-                                {data?.newProduct && (
+                                {SanityData?.newProduct && (
                                     <Badge variant="destructive" className="text-sm">NEW</Badge>
                                 )}
-                                {data?.premiumProduct && (
+                                {SanityData?.premiumProduct && (
                                     <Badge variant="default" className="text-sm">PREMIUM</Badge>
                                 )}
-                                {data?.quantity && data.quantity < 5 && (
+                                {SanityData?.quantity && SanityData.quantity < 5 && (
                                     <Badge variant="secondary" className="text-sm">
-                                        Only {data.quantity} left
+                                        Only {SanityData.quantity} left
                                     </Badge>
                                 )}
                             </div>
 
                             {/* Product Name */}
                             <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
-                                {data?.name || 'Loading...'}
+                                {SanityData?.name || 'Loading...'}
                             </h1>
 
                             {/* Reviews */}
-                            {data?.reviews !== undefined && (
+                            {SanityData?.reviews !== undefined && (
                                 <div className="flex items-center space-x-2">
                                     <div className="flex text-yellow-400">
                                         {[...Array(5)].map((_, i) => (
                                             <svg
                                                 key={i}
-                                                className={`w-5 h-5 ${i < Math.floor(data.reviews / 20) ? 'fill-current' : 'fill-gray-300'}`}
+                                                className={`w-5 h-5 ${i < Math.floor(SanityData.reviews / 20) ? 'fill-current' : 'fill-gray-300'}`}
                                                 viewBox="0 0 20 20"
                                             >
                                                 <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                                             </svg>
                                         ))}
                                     </div>
-                                    <span className="text-sm text-gray-500">({data.reviews} Reviews)</span>
+                                    <span className="text-sm text-gray-500">({SanityData.reviews} Reviews)</span>
                                 </div>
                             )}
 
                             {/* Description */}
                             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                {data?.description || 'Loading description...'}
+                                {SanityData?.description || 'Loading description...'}
                             </p>
                         </div>
 
@@ -197,7 +216,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                         </motion.div>
 
                         {/* Color Selection */}
-                        {data?.color && (
+                        {SanityData?.color && (
                             <div className="space-y-2">
                                 <div className="flex justify-between items-center">
                                     <span className="text-sm font-medium">
@@ -206,25 +225,25 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                                 </div>
                                 <div className="flex flex-wrap gap-2">
                                     <Button
-                                        variant={selectedColor === data.color ? "default" : "outline"}
-                                        onClick={() => setSelectedColor(data.color)}
+                                        variant={selectedColor === SanityData.color ? "default" : "outline"}
+                                        onClick={() => setSelectedColor(SanityData.color)}
                                         className="min-w-[3rem]"
                                     >
-                                        {data.color}
+                                        {SanityData.color}
                                     </Button>
                                 </div>
                             </div>
                         )}
 
                         {/* Size Selection */}
-                        {data?.sizes && data.sizes.length > 0 && (
+                        {SanityData?.sizes && SanityData.sizes.length > 0 && (
                             <div className="space-y-2">
                                 <div className="flex justify-between items-center">
                                     <span className="text-sm font-medium">Size</span>
                                     <SizeGuide />
                                 </div>
                                 <div className="flex flex-wrap gap-2">
-                                    {data.sizes.map((size, index) => {
+                                    {SanityData.sizes.map((size:string, index) => {
                                         const priceIncrement = getPriceIncrement(size);
                                         return (
                                             <Button
@@ -251,7 +270,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                             <div className="flex justify-between items-center">
                                 <span className="text-sm font-medium">Quantity</span>
                                 <span className="text-sm text-gray-500">
-                                    {data?.quantity ? `${data.quantity} in stock` : 'Out of stock'}
+                                    {SanityData?.quantity ? `${SanityData.quantity} in stock` : 'Out of stock'}
                                 </span>
                             </div>
                             <div className="flex  md:flex-row flex-col items-start md:items-center gap-4 flex-wrap">
@@ -269,7 +288,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                                     <button
                                         onClick={() => handleQuantityChange(quantity + 1)}
                                         className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                                        disabled={quantity >= (data?.quantity || 0)}
+                                        disabled={quantity >= (SanityData?.quantity || 0)}
                                     >
                                         <Plus className="w-4 h-4" />
                                     </button>
@@ -279,7 +298,7 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                                 <Button
                                     className=" flex md:flex-1 w-32 md:w-auto  md:h-12 rounded-xl relative overflow-hidden"
                                     onClick={handleAddToCart}
-                                    disabled={!data?.quantity || data.quantity === 0}
+                                    disabled={!SanityData?.quantity || SanityData.quantity === 0}
                                 >
                                     <AnimatePresence>
                                         {isAddedToCart ? (
@@ -355,17 +374,17 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                         <div className="space-y-2 pt-4 border-t">
                             <div className="flex space-x-2 text-sm">
                                 <span className="font-medium">Brand:</span>
-                                <span className="text-gray-600 dark:text-gray-300">{data?.brand || 'N/A'}</span>
+                                <span className="text-gray-600 dark:text-gray-300">{SanityData?.Brand || 'N/A'}</span>
                             </div>
                             <div className="flex space-x-2 text-sm">
                                 <span className="font-medium">Category:</span>
-                                <span className="text-gray-600 dark:text-gray-300">{data?.category || 'N/A'}</span>
+                                <span className="text-gray-600 dark:text-gray-300">{SanityData?.category || 'N/A'}</span>
                             </div>
-                            {data?.tags && data.tags.length > 0 && (
+                            {SanityData?.tags && SanityData.tags.length > 0 && (
                                 <div className="flex space-x-2 text-sm">
                                     <span className="font-medium">Tags:</span>
                                     <div className="flex flex-wrap gap-1">
-                                        {data.tags.map((tag, index) => (
+                                        {SanityData.tags.map((tag, index) => (
                                             <Badge key={index} variant="secondary" className="text-xs">
                                                 {tag}
                                             </Badge>
@@ -376,14 +395,14 @@ export default function ProductDetailsDynamicPageStructure({ SanityData }: { San
                         </div>
 
                         {/* Inventory Status */}
-                        {data?.quantity !== undefined && (
+                        {SanityData?.quantity !== undefined && (
                             <div className="pt-4">
                                 <Badge
-                                    variant={data.quantity > 10 ? "default" : data.quantity > 0 ? "secondary" : "destructive"}
+                                    variant={SanityData.quantity > 10 ? "default" : SanityData.quantity > 0 ? "secondary" : "destructive"}
                                     className="text-sm"
                                 >
-                                    {data.quantity > 10 ? 'In Stock' :
-                                        data.quantity > 0 ? `Only ${data.quantity} left` : 'Out of Stock'}
+                                    {SanityData.quantity > 10 ? 'In Stock' :
+                                        SanityData.quantity > 0 ? `Only ${SanityData.quantity} left` : 'Out of Stock'}
                                 </Badge>
                             </div>
                         )}

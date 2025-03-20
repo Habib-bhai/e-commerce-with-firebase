@@ -10,24 +10,18 @@ import { toast } from 'sonner';
 import { useWishlist } from '@/app/context/WishListContext';
 
 
+
+
 interface productCardProps {
     name: string
-    imgSrc: {
-        _type: 'image',
-        asset: {
-            _ref: string;
-            _type: 'reference';
-        },
-        key: string
-
-    }[],
+    imgSrc: string,
     Price: number,
     discountedPrice?: number,
     descrition: string,
     premium?: boolean,
     newProduct?: boolean
     reviews: number,
-    slug: { current: string }
+    slug: string
 }
 
 
@@ -43,23 +37,20 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
     const [isLiked, setIsLiked] = useState(false);
     const [showDetails, setShowDetails] = useState(false);
 
-    const imageUrl: string = imgSrc && imgSrc[0]?.asset
-        ? ''
-        : '/placeholder-image.jpg';
 
 
     useEffect(() => {
-        setIsLiked(wishlistState.items.some(item => item.id === slug.current));
+        setIsLiked(wishlistState.items.some(item => item.id === slug));
     }, [wishlistState, slug]);
 
 
     const handleAddToCart = (e: React.MouseEvent) => {
         e.stopPropagation();
         addItem({
-            id: slug.current,
+            id: slug,
             name,
             price: Price,
-            image: imageUrl,
+            image: imgSrc,
             quantity: 1
         });
         toast("Product added to cart");
@@ -68,14 +59,14 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
     const handleToggleWishlist = (e: React.MouseEvent) => {
         e.stopPropagation();
         if (isLiked) {
-            removeFromWishlist(slug.current);
+            removeFromWishlist(slug);
             toast.success(`${name} removed from wishlist`);
         } else {
             addToWishlist({
-                id: slug.current,
+                id: slug,
                 name,
                 price: Price,
-                image: imageUrl
+                image: imgSrc
             });
             toast.success(`${name} added to wishlist`);
         }
@@ -83,13 +74,13 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
     }
 
     return (
-        <div onClick={() => router.push(`/shop/${slug.current}`)} className="relative w-[310px] mt-10 ">
+        <div onClick={() => router.push(`/shop/${slug}`)} className="relative w-[310px] mt-10 ">
             {/* Floating background circles */}
             <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-purple-400/30 to-pink-400/30 rounded-full blur-xl animate-pulse"></div>
             <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-blue-400/30 to-cyan-400/30 rounded-full blur-xl animate-pulse delay-700"></div>
 
             <div
-                onClick={() => router.push(`/shop/${slug.current}`)}
+                onClick={() => router.push(`/shop/${slug}`)}
                 className={`relative bg-white/80 backdrop-blur-md rounded-3xl transition-all duration-700 ${showDetails ? '' : ''
                     }`}
                 onMouseEnter={() => setIsHovered(true)}
@@ -116,7 +107,7 @@ const ProductCard = ({ name, imgSrc, Price, discountedPrice, descrition, premium
                         <div className={`absolute inset-0 transition-all duration-700 ${isHovered ? 'scale-110 rotate-3' : 'scale-100 rotate-0'
                             }`}>
                             <Image
-                                src={imageUrl}
+                                src={imgSrc}
                                 alt="Product"
                                 className="h-full w-full "
                                 objectFit='contain'
