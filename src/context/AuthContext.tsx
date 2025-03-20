@@ -1,12 +1,11 @@
 "use client";
-import React, { useContext, createContext, ReactNode } from "react";
-import {  getAuth, User } from "firebase/auth";
-import firebase_app from "@/app/firebase/config";
+import React, { useContext, createContext, ReactNode, useEffect } from "react";
+import {   onAuthStateChanged, User } from "firebase/auth";
+import  { auth } from "@/app/firebase/config";
 import Loading from "@/app/loading";
 
-import {useAuthState} from "react-firebase-hooks/auth"
 
-const auth = getAuth(firebase_app);
+
 
 // Define the shape of the context value
 interface AuthContextType {
@@ -28,9 +27,22 @@ export const useAuthContext = (): AuthContextType => {
 
 // AuthContextProvider component
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [loading] = React.useState(false);
-  const [user] = useAuthState(auth);
-  console.log(user)
+  const [loading, setLoading] = React.useState(false);
+  const [user, setUser] = React.useState<User | null>(null);
+ 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+            setUser(user);
+        } else {
+            setUser(null);
+        }
+        setLoading(false);
+    });
+
+    return () => unsubscribe();
+}, [user]);
+
 
   return (
     <AuthContext.Provider value={{ user }}>

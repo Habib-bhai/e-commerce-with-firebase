@@ -6,7 +6,8 @@ import { useAuthContext } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { collection, getDocs } from "firebase/firestore"
-import { db } from "../firebase/config"
+import firebase_app, { db } from "../firebase/config"
+import { getAuth } from "firebase/auth"
 
 
 
@@ -30,18 +31,11 @@ interface Product {
 }
 
 export default function ShopPage() {
-  // const { user } = useAuthContext();
-  // const router = useRouter();
   const [Data, setData] = useState<Product[]>([])
-  const [UserSession, setUserSession] = useState<string | null>("")
   const { user } = useAuthContext()
   const router = useRouter()
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setUserSession(sessionStorage.getItem("user"));
-    }
-  }, []);
+  
 
 
   useEffect(() => {
@@ -87,8 +81,8 @@ export default function ShopPage() {
   }, []);
 
   useEffect(() => {
-    console.log("One", user, UserSession, "Two")
-    if (user == null && !UserSession) router.push("/sign-in")
+    console.log("One", user)
+    if (user == null ) router.push("/sign-in")
           // eslint-disable-next-line
   }, [user])
 

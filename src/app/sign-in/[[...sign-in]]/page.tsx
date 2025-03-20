@@ -27,13 +27,8 @@ export default function SigninPage() {
     setError(null)
 
     try {
-      await setPersistence(auth, browserSessionPersistence); // Set persistence to local
         // eslint-disable-next-line
-      const { result } = await signIn(email, password)
-      console.log(result)
-      // successful signin
-      sessionStorage.setItem("user", "logedin")
-    //   console.log(result)
+       await signIn(email, password)
       router.push("/shop")
     } catch (err) {
       setError("An unexpected error occurred")
