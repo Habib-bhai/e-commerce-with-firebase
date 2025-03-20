@@ -2,6 +2,8 @@ import Image from 'next/image'
 import React from 'react'
 import ProductCard from './ProductCard'
 import { Aoboshi_One } from 'next/font/google'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '@/app/firebase/config'
 // import { client } from '@/sanity/lib/client'
 
 
@@ -12,47 +14,64 @@ const aboshi = Aoboshi_One({
 })
 
 
-interface fetchProduct {
-  name: string,
-  price: number,
-  slug: {current: string},
-  image: {
-    _type: 'image',
-    asset: {
-      _ref: string;
-      _type: 'reference';
-    },
-    key: string
-  
-  }[],
-  newProduct: boolean,
-  premiumProduct: boolean,
-  reviews: number,
-  description: string
+interface Product {
+  name: string;
+  image: string[];
+  productSlug: string;
+  description: string;
+  newProduct: boolean;
+  premiumProduct: boolean;
+  sizes: string[];
+  category: string;
+  reviews: number;
+  price: number;
+  quantity: number;
+  color: string;
+  tags: string[];
+  Brand: string;
 }
+ async function getAllProducts() {
+      try {
+        const productsCollectionRef = collection(db, "products");
+        const querySnapshot = await getDocs(productsCollectionRef);
 
-// async function getData() {
-//   const data = await client.fetch(`
-//     *[_type == "product"  ][0...6] {
-//   name,
-//   price,
-//     slug,
-//     image,
-//     newProduct,
-//     premiumProduct,
-//     reviews,
-//     description
-// }
-//     `)
 
-//   return data
-// }
+        // Map the documents to the Product type
+        const products: Product[] = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+
+          // Type assertion to ensure the data matches the Product type
+          return {
+            name: data.name || "",
+            image: data.image || [],
+            productSlug: data.productSlug || "",
+            description: data.description || "",
+            newProduct: data.newProduct || false,
+            premiumProduct: data.premiumProduct || false,
+            sizes: data.sizes || [],
+            category: data.category || "",
+            reviews: data.reviews || 0,
+            price: data.price || 0,
+            quantity: data.quantity || 0,
+            color: data.color || "",
+            tags: data.tags || [],
+            Brand: data.Brand || "",
+          } as Product;
+        });
+
+        return  products;
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        return []; // Return an empty array in case of error
+      }
+    }
+
 
 export const revalidate = 60
 
 export default async function FeaturedProducts() {
 
-  // const Data: fetchProduct[] = await getData()
+  const Data: Product[] = await getAllProducts()
   
   
   return (
@@ -73,8 +92,8 @@ export default async function FeaturedProducts() {
     <div className="w-full flex justify-evenly items-center flex-wrap">
 
       {
-        [].map((item: fetchProduct) => (
-          <ProductCard slug={item.slug} key={item.slug.current} Price={item.price}  descrition={item.description} newProduct={item.newProduct} premium={item.premiumProduct} name={item.name} reviews={item.reviews} imgSrc={item.image}   />
+        Data.map((item: Product) => (
+          <ProductCard slug={item.productSlug} key={item.productSlug} Price={item.price}  descrition={item.description} newProduct={item.newProduct} premium={item.premiumProduct} name={item.name} reviews={item.reviews} imgSrc={item.image[0]}   />
         ))
       }
     </div>
