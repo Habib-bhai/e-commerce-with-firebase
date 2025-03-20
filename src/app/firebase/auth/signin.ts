@@ -1,5 +1,5 @@
-import firebase_app, { auth } from "../config";
-import { signInWithEmailAndPassword, getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
+import  { auth } from "../config";
+import { signInWithEmailAndPassword,  setPersistence, browserSessionPersistence } from "firebase/auth";
 
 
 export default async function signIn(email:string, password:string) {

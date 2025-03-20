@@ -6,8 +6,7 @@ import { useAuthContext } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { collection, getDocs } from "firebase/firestore"
-import firebase_app, { db } from "../firebase/config"
-import { getAuth } from "firebase/auth"
+import  { db } from "../firebase/config"
 
 
 

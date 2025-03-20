@@ -9,8 +9,6 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight, Loader2, ShoppingBag } from "lucide-react"
 import signIn from "@/app/firebase/auth/signin"
-import {  getAuth, setPersistence, browserSessionPersistence } from "firebase/auth"
-import firebase_app from "@/app/firebase/config"
 
 export default function SigninPage() {
   const [email, setEmail] = useState("")
@@ -19,7 +17,6 @@ export default function SigninPage() {
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
-  const auth = getAuth(firebase_app)
 
   const handleForm = async (event: FormEvent) => {
     event.preventDefault()
